@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo_app/screens/login_screen.dart';
+import 'package:todo_app/ui/login/login_screen.dart';
 import 'package:todo_app/utils/colors.dart';
 
 void main() {

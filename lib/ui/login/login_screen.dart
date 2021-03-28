@@ -1,11 +1,18 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app/controllers/login_controller.dart';
+import 'package:todo_app/data/providers/api.dart';
+import 'package:todo_app/data/repository/login_repository.dart';
 import 'package:todo_app/utils/colors.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends GetView<LoginController> {
+
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -59,6 +66,7 @@ class LoginScreen extends StatelessWidget {
                         right: width * 0.03,
                         top: height * 0.1),
                     child: TextField(
+                      controller: usernameController,
                       decoration: InputDecoration(
                         hintText: 'E-mail',
                         hintStyle: TextStyle(color: Color(0xffa0a0a0)),
@@ -83,6 +91,7 @@ class LoginScreen extends StatelessWidget {
                         right: width * 0.03,
                         top: height * 0.02),
                     child: TextField(
+                      controller: passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
                         hintText: 'Password',
@@ -102,8 +111,8 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   GetX<LoginController>(
-                    init: LoginController(),
                     initState: (_) {},
+                    init: LoginController(repository: LoginRepository(apiClient: ApiClient(dio: Dio()))),
                     builder: (_) {
                       return Center(
                         child: Container(
@@ -112,20 +121,28 @@ class LoginScreen extends StatelessWidget {
                               right: width * 0.03,
                               top: height * 0.04),
                           height: 54,
-                          width:  width * 0.94,
+                          width: width * 0.94,
                           child: ElevatedButton(
-                            onPressed: _.changeButtonLoading,
+                            onPressed: (){
+                              _.signIn(usernameController.text, passwordController.text);
+                            },
                             style: ElevatedButton.styleFrom(
                               primary: _.color,
                               shape: RoundedRectangleBorder(
                                   borderRadius: radiusStyle),
                             ),
-                            child: _.loading ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white),))
-                            : Text(
-                              "login",
-                              style: GoogleFonts.lobsterTwo(
-                            fontSize: 28, color: Colors.white, fontWeight: FontWeight.bold)),
-                            ),                        
+                            child: _.loading
+                                ? Center(
+                                    child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white),
+                                  ))
+                                : Text("login",
+                                    style: GoogleFonts.lobsterTwo(
+                                        fontSize: 28,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold)),
+                          ),
                         ),
                       );
                     },
@@ -137,21 +154,23 @@ class LoginScreen extends StatelessWidget {
               height: height * 0.1,
               width: size.width,
               color: kPrimaryColor,
-              child: Row(                
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: EdgeInsets.only(top: 10, left: width * 0.03),
-                    child: FaIcon(FontAwesomeIcons.code, color: Colors.white,),
+                    child: FaIcon(
+                      FontAwesomeIcons.code,
+                      color: Colors.white,
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 10, left: width * 0.03),
                     child: Text('developed by: Thierry Oliveira',
-                      style: GoogleFonts.lobsterTwo(
-                          fontSize: 18, color: Colors.white)),
+                        style: GoogleFonts.lobsterTwo(
+                            fontSize: 18, color: Colors.white)),
                   ),
-                  
                 ],
               ),
             )
