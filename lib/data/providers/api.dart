@@ -9,43 +9,34 @@ import 'package:todo_app/data/model/task_model.dart';
 const baseUrl = 'http://192.168.1.7:3000';
 
 class ApiClient {
-
-final Dio dio;
-ApiClient({@required this.dio});
-
+  final Dio dio;
+  ApiClient({@required this.dio});
 
   Future<AccessTokenModel> signIn(String username, String password) async {
     AccessTokenModel token = AccessTokenModel();
     dio.options.contentType = Headers.jsonContentType;
     try {
-      var response = await dio.post(baseUrl + '/auth/signin/', data: jsonEncode({'username': username, 'password': password}), 
-      options: Options(contentType:Headers.jsonContentType ));
-      if(response.data != null){
-          token = AccessTokenModel.fromJson(response.data);
+      var response = await dio.post(baseUrl + '/auth/signin/',
+          data: jsonEncode({'username': username, 'password': password}),
+          options: Options(contentType: Headers.jsonContentType));
+      if (response.data != null) {
+        token = AccessTokenModel.fromJson(response.data);
       }
-    } catch (e) {      
+    } catch (e) {
+      print(e);
     }
     return token;
   }
 
- getAll() async {
-  try {
-    var response = await dio.get(baseUrl + '/tasks/');
-    if(response.statusCode == 200){
-      Iterable jsonResponse = json.decode(response.data);
-        List<TaskModel> listMyModel = jsonResponse.map((model) => TaskModel.fromJson(model)).toList();
-      return listMyModel;
-    }else print ('erro');
-  } catch(_){ }
-}
-
-// getId(id) async {
-//   try {
-//       var response = await httpClient.get('baseUrlid');
-//     if(response.statusCode == 200){
-//       //Map<String, dynamic> jsonResponse = json.decode(response.body);
-//     }else print ('erro -get');
-//   } catch(_){ }
-// }
-
+  getAll(String token) async {
+    try {
+      dio.options.headers['Authorization'] = 'bearer ' + token;
+      var response = await dio.get(baseUrl + '/tasks/');
+        return (response.data as List)
+          .map((x) => Task.fromJson(x))
+          .toList();
+    } catch (e) {
+      print(e);
+    }
+  }
 }

@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app/controllers/login_controller.dart';
 import 'package:todo_app/data/providers/api.dart';
 import 'package:todo_app/data/repository/login_repository.dart';
+import 'package:todo_app/ui/tasks/tasks_screen.dart';
 import 'package:todo_app/utils/colors.dart';
 
 class LoginScreen extends GetView<LoginController> {
@@ -112,7 +113,7 @@ class LoginScreen extends GetView<LoginController> {
                   ),
                   GetX<LoginController>(
                     initState: (_) {},
-                    init: LoginController(repository: LoginRepository(apiClient: ApiClient(dio: Dio()))),
+                    // init: LoginController(repository: LoginRepository(apiClient: ApiClient(dio: Dio()))),
                     builder: (_) {
                       return Center(
                         child: Container(
@@ -125,6 +126,9 @@ class LoginScreen extends GetView<LoginController> {
                           child: ElevatedButton(
                             onPressed: (){
                               _.signIn(usernameController.text, passwordController.text);
+                                if (_.signedIn) {
+                                  Get.to(() => TasksScreen(), arguments: _.token);
+                                }                              
                             },
                             style: ElevatedButton.styleFrom(
                               primary: _.color,

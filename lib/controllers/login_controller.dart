@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/data/repository/login_repository.dart';
 import 'package:todo_app/utils/colors.dart';
@@ -19,6 +20,10 @@ class LoginController extends GetxController {
   get signedIn => this._signedIn.value;
   set signedIn(value) => this._signedIn.value = value;
 
+  final _token = ''.obs;
+  get token => this._token.value;
+  set token(value) => this._token.value = value;
+
   signIn(String username, String password) {
     if ((username != null && username.isNotEmpty) &&
         (password != null && password.isNotEmpty)) {
@@ -28,11 +33,13 @@ class LoginController extends GetxController {
         if (data.accessToken != null && data.accessToken.isNotEmpty) {
           this.loading = false;
           this.signedIn = true;
+          this.token = data.accessToken;
+          saveTokenOnSecureStorage(this.token);
           changeButtonLoading();
         } else {
           this.loading = false;
           changeButtonLoading();
-
+  
           Get.snackbar(
             "Invalid credentials",
             "Please, check your username and password",
@@ -44,6 +51,11 @@ class LoginController extends GetxController {
         // signedIn = data;
       });
     }
+  }
+
+  saveTokenOnSecureStorage(String token) async {
+    final storage = new FlutterSecureStorage();
+    await storage.write(key: 'jwt', value: token);
   }
 
   changeButtonLoading() {

@@ -1,23 +1,37 @@
-import 'package:todo_app/data/model/enums/task-status.enum.dart';
+// To parse this JSON data, do
+//
+//     final task = taskFromJson(jsonString);
 
-class TaskModel {
-  int id;
-  String title;
-  String description;
-  TaskStatus status;
+import 'dart:convert';
 
-  TaskModel.fromJson(Map<String, dynamic> json){
-      this.id = json['id'];
-      this.title = json['title'];
-      this.description = json['description'];
-      this.status = json['status'];
-  }
+List<Task> taskFromJson(String str) => List<Task>.from(json.decode(str).map((x) => Task.fromJson(x)));
 
-  Map<String, dynamic> toJson(){
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.title;
-    data['description'] = this.description;
-    return data;
-  }
+String taskToJson(List<Task> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+class Task {
+    Task({
+        this.id,
+        this.title,
+        this.description,
+        this.status,
+    });
+
+    int id;
+    String title;
+    String description;
+    String status;
+
+    factory Task.fromJson(Map<String, dynamic> json) => Task(
+        id: json["id"],
+        title: json["title"],
+        description: json["description"],
+        status: json["status"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "description": description,
+        "status": status,
+    };
 }
