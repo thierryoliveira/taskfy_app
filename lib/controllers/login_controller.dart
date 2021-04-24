@@ -7,6 +7,8 @@ import 'package:todo_app/utils/colors.dart';
 class LoginController extends GetxController {
   final repository = Get.find<LoginRepository>();
 
+  final box = GetStorage();
+
   final _color = kPrimaryColor.obs;
   get color => this._color.value;
   set color(value) => this._color.value = value;
@@ -19,10 +21,6 @@ class LoginController extends GetxController {
   get signedIn => this._signedIn.value;
   set signedIn(value) => this._signedIn.value = value;
 
-  final _token = ''.obs;
-  get token => this._token.value;
-  set token(value) => this._token.value = value;
-
   signIn(String username, String password) {
     if ((username != null && username.isNotEmpty) &&
         (password != null && password.isNotEmpty)) {
@@ -30,10 +28,9 @@ class LoginController extends GetxController {
       changeButtonLoading();
       repository.signIn(username, password).then((data) {
         if (data.accessToken != null && data.accessToken.isNotEmpty) {
+          writeAccessTokenOnStorage(data.accessToken);
           this.loading = false;
           this.signedIn = true;
-          this.token = data.accessToken;
-          writeAccessTokenOnStorage(this.token);
           changeButtonLoading();
           Get.offAndToNamed('/tasks');
         } else {
@@ -53,9 +50,8 @@ class LoginController extends GetxController {
     }
   }
 
-  writeAccessTokenOnStorage(String token) async {
-    final storage = GetStorage('mytasks');
-    storage.write('accessToken', token);
+  writeAccessTokenOnStorage(String token) {
+    box.write('accessToken', token);
   }
 
   

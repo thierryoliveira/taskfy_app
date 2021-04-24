@@ -8,7 +8,7 @@ class TaskController extends GetxController {
 
   @override
   void onInit() {
-    final storage = GetStorage('mytasks');
+    final storage = GetStorage();
     this._token = storage.read('accessToken');
     super.onInit();
   }

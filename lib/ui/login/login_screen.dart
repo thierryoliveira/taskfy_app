@@ -127,7 +127,7 @@ class LoginScreen extends GetView<LoginController> {
                             onPressed: (){
                               _.signIn(usernameController.text, passwordController.text);
                                 if (_.signedIn) {
-                                  Get.to(() => TasksScreen(), arguments: _.token);
+                                  Get.toNamed('/tasks');
                                 }                              
                             },
                             style: ElevatedButton.styleFrom(

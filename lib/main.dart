@@ -8,12 +8,12 @@ import 'package:todo_app/routes/app_pages.dart';
 import 'package:todo_app/routes/app_routes.dart';
 import 'package:todo_app/utils/colors.dart';
 
-Future<void> main() async {
+void main() async {
+  await GetStorage.init();
   runApp(MyApp());
    Future.wait([
     precachePicture(ExactAssetPicture(SvgPicture.svgStringDecoder, 'assets/splashscreen.svg'), null),
   ]);
-  await GetStorage.init('mytasks');
   
 }
 
