@@ -27,15 +27,4 @@ class AuthApiClient {
     return token;
   }
 
-  getAll(String token) async {
-    try {
-      dio.options.headers['Authorization'] = 'bearer ' + token;
-      var response = await dio.get(baseUrl + '/tasks/');
-        return (response.data as List)
-          .map((x) => Task.fromJson(x))
-          .toList();
-    } catch (e) {
-      print(e);
-    }
-  }
 }

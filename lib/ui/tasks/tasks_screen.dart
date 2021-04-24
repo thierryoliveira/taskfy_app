@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/controllers/task_controller.dart';
 import 'package:todo_app/data/model/task_model.dart';
-import 'package:todo_app/data/providers/auth_api.dart';
+import 'package:todo_app/data/providers/auth_provider.dart';
 import 'package:todo_app/data/repository/task_repository.dart';
 import 'package:todo_app/ui/tasks/widgets/task_item.dart';
 import 'package:todo_app/utils/colors.dart';
@@ -11,7 +11,7 @@ import 'package:todo_app/utils/colors.dart';
 class TasksScreen extends GetWidget<TaskController> {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final size = Get.size;
     final height = size.height;
     final width = size.width;
     final BorderRadius radiusStyle = BorderRadius.only(
@@ -66,7 +66,7 @@ class TasksScreen extends GetWidget<TaskController> {
           GetX<TaskController>(
             init: TaskController(),
             initState: (_) {
-              Get.find<TaskController>().getAll(Get.arguments.toString());
+              Get.find<TaskController>().getAll();
             },
             builder: (_) {
               return _.taskList.length < 1 ? 
