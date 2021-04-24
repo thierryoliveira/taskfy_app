@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app/controllers/login_controller.dart';
-import 'package:todo_app/data/providers/api.dart';
+import 'package:todo_app/data/providers/auth_api.dart';
 import 'package:todo_app/data/repository/login_repository.dart';
 import 'package:todo_app/ui/tasks/tasks_screen.dart';
 import 'package:todo_app/utils/colors.dart';

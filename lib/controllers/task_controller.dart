@@ -5,8 +5,7 @@ import 'package:todo_app/data/repository/task_repository.dart';
 
 class TaskController extends GetxController {
 
-final TaskRepository repository;
-TaskController({@required this.repository}) : assert(repository != null);
+  final TaskRepository repository = TaskRepository();
 
   final _token = ''.obs;
   get token => this._token.value;

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:todo_app/data/repository/login_repository.dart';
 import 'package:todo_app/utils/colors.dart';
 
 class LoginController extends GetxController {
-  final LoginRepository repository;
-  LoginController({@required this.repository}) : assert(repository != null);
+  final repository = Get.find<LoginRepository>();
 
   final _color = kPrimaryColor.obs;
   get color => this._color.value;
@@ -34,8 +33,9 @@ class LoginController extends GetxController {
           this.loading = false;
           this.signedIn = true;
           this.token = data.accessToken;
-          saveTokenOnSecureStorage(this.token);
+          writeAccessTokenOnStorage(this.token);
           changeButtonLoading();
+          Get.offAndToNamed('/tasks');
         } else {
           this.loading = false;
           changeButtonLoading();
@@ -53,10 +53,12 @@ class LoginController extends GetxController {
     }
   }
 
-  saveTokenOnSecureStorage(String token) async {
-    final storage = new FlutterSecureStorage();
-    await storage.write(key: 'jwt', value: token);
+  writeAccessTokenOnStorage(String token) async {
+    final storage = GetStorage('mytasks');
+    storage.write('accessToken', token);
   }
+
+  
 
   changeButtonLoading() {
     this.color = this.loading ? kRadicalRedColor : kPrimaryColor;

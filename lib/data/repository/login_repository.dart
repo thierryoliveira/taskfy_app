@@ -1,12 +1,11 @@
 import 'package:meta/meta.dart';
 import 'package:todo_app/data/model/access_token_model.dart';
-import 'package:todo_app/data/providers/api.dart';
+import 'package:todo_app/data/providers/auth_api.dart';
 
 class LoginRepository {
 
-final ApiClient apiClient;
+final AuthApiClient apiClient = AuthApiClient();
 
-LoginRepository({@required this.apiClient}) : assert(apiClient != null);
 
   Future<AccessTokenModel> signIn(String username, String password) async {
     return apiClient.signIn(username, password);

@@ -6,11 +6,10 @@ import 'package:meta/meta.dart';
 import 'package:todo_app/data/model/access_token_model.dart';
 import 'package:todo_app/data/model/task_model.dart';
 
-const baseUrl = 'http://192.168.1.7:3000';
+const baseUrl = 'http://192.168.1.11:3000';
 
-class ApiClient {
-  final Dio dio;
-  ApiClient({@required this.dio});
+class AuthApiClient {
+  final Dio dio = Dio();
 
   Future<AccessTokenModel> signIn(String username, String password) async {
     AccessTokenModel token = AccessTokenModel();

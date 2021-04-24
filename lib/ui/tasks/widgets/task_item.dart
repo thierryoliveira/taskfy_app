@@ -3,12 +3,11 @@ import 'package:todo_app/data/model/task_model.dart';
 import 'package:todo_app/utils/colors.dart';
 
 class TaskItem extends StatefulWidget {
-  const TaskItem({Key key, this.title, this.description}) : super(key: key);
+  const TaskItem({Key key, this.task}) : super(key: key);
 
   @override
   _TaskItemState createState() => _TaskItemState();
-  final String title;
-  final String description;
+  final Task task;
 }
 
 class _TaskItemState extends State<TaskItem> {
@@ -28,12 +27,14 @@ class _TaskItemState extends State<TaskItem> {
     borderRadius: BorderRadius.circular(15.0),
   ),
           activeColor: kPrimaryColor,
-          title: Text(widget.title, style: TextStyle(color: Color(0xff656565), fontSize: 20),),
-          subtitle: Text(widget.description),
+          title: Text(widget.task.title, style: widget.task.status == 'DONE' ? TextStyle(color: Color(0xff656565), fontSize: 22, decoration: TextDecoration.lineThrough) : TextStyle(color: Color(0xff656565), fontSize: 22),),
+          subtitle: Text(widget.task.description, style: widget.task.status == 'DONE' ? TextStyle(fontSize: 18, decoration: TextDecoration.lineThrough) : TextStyle(fontSize: 18),),
           controlAffinity: ListTileControlAffinity.leading,
           onChanged: (_){
-
-          }, value: true,
+            setState(() {
+              
+            });
+          }, value: widget.task.status == 'DONE',
         ),
       ),
     );

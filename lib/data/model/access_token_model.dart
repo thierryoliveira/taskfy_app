@@ -5,6 +5,7 @@ class AccessTokenModel {
 
   AccessTokenModel();
 
+
   AccessTokenModel.fromJson(Map<String, dynamic> json){
       this.accessToken = json['accessToken'];
       
