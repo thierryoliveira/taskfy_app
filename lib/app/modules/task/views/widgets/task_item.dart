@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/data/model/task_model.dart';
-import 'package:todo_app/utils/colors.dart';
+import 'package:todo_app/ui/task_model.dart';
+import 'package:todo_app/app/global/colors.dart';
 
 class TaskItem extends StatefulWidget {
   const TaskItem({Key key, this.task}) : super(key: key);

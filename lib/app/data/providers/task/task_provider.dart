@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
-import 'package:todo_app/data/model/task_model.dart';
+import 'package:todo_app/ui/task_model.dart';
 
 const baseUrl = 'http://192.168.1.11:3000';
 

@@ -1,6 +1,4 @@
-import 'package:meta/meta.dart';
-import 'package:todo_app/data/providers/auth_provider.dart';
-import 'package:todo_app/data/providers/task_provider.dart';
+import 'package:todo_app/app/data/model/login/providers/task_provider.dart';
 
 class TaskRepository {
 

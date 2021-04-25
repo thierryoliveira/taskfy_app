@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:splashscreen/splashscreen.dart';
-import 'package:todo_app/controllers/initial_controller.dart';
-import 'package:todo_app/utils/colors.dart';
+import 'package:todo_app/app/modules/initial/controllers/initial_controller.dart';
+import 'package:todo_app/app/global/colors.dart';
 
-class InitialScreen extends GetView<InitialController> {
+class InitialPage extends GetView<InitialController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

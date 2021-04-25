@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:todo_app/controllers/initial_controller.dart';
+import 'package:todo_app/app/modules/initial/controllers/initial_controller.dart';
 
 class InitialBinding implements Bindings {
 @override

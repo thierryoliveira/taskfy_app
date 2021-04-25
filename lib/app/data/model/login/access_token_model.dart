@@ -1,5 +1,3 @@
-import 'package:todo_app/data/model/enums/task-status.enum.dart';
-
 class AccessTokenModel {
   String accessToken;
 
