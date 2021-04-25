@@ -73,7 +73,7 @@ class TasksPage extends GetWidget<TaskController> {
                   padding: EdgeInsets.fromLTRB(
                       width * 0.03, height * 0.05, width * 0.03, height * 0.01),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: kLighterColor,
                     borderRadius: radiusStyle,
                   ),
                   child: ListView.builder(
