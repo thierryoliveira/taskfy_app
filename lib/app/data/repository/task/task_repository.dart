@@ -1,4 +1,5 @@
-import 'package:todo_app/app/data/model/login/providers/task_provider.dart';
+
+import 'package:todo_app/app/data/providers/task/task_provider.dart';
 
 class TaskRepository {
 
