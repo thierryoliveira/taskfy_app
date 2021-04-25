@@ -25,44 +25,95 @@ class _TaskItemState extends State<TaskItem> {
           left: size.width * 0.05,
           right: size.width * 0.05),
       color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 7, bottom: 7),
-        child: ListTile(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
+      child: Dismissible(
+        key: ObjectKey(widget.key),
+        secondaryBackground: Container(
+          color: kRadicalRedColor,
+          child: Padding(
+            padding: EdgeInsets.all(15),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
+                Text(
+                  'Remove task',
+                  style: TextStyle(color: Colors.white),
+                )
+              ],
+            ),
           ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [   
-                  if(!isDone) Padding(
-                    padding: EdgeInsets.only(right: size.width * 0.02),
-                    child: Icon(Icons.check_circle, color: Colors.green,),
-                  ),                  
-                  Text(
-                    widget.task.title,
-                    style: isDone
-                        ? TextStyle(
-                            color: Color(0xff656565),
-                            fontSize: 22,
-                            decoration: TextDecoration.lineThrough, fontWeight: FontWeight.bold)
-                        : TextStyle(color: Color(0xff656565), fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              Text(
-                '4 pm',
-                style: isDone
-                    ? TextStyle(
-                        color: Color(0xff656565),
-                        fontSize: 22,
-                        decoration: TextDecoration.lineThrough, fontWeight: FontWeight.bold)
-                    : TextStyle(color: Color(0xff656565), fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ), // subtitle: Text(widget.task.description, style: widget.task.status == 'DONE' ? TextStyle(fontSize: 18, decoration: TextDecoration.lineThrough) : TextStyle(fontSize: 18),),
+        ),
+        background: Container(
+          color: kMidBlueColor,
+          child: Padding(
+            padding: EdgeInsets.all(15),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.done,
+                  color: Colors.white,
+                ),
+                Text(
+                  'Make done',
+                  style: TextStyle(color: Colors.white),
+                )
+              ],
+            ),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 7, bottom: 7),
+          child: ListTile(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    if (!isDone)
+                      Padding(
+                        padding: EdgeInsets.only(right: size.width * 0.02),
+                        child: Icon(
+                          Icons.check_circle,
+                          color: Colors.green,
+                        ),
+                      ),
+                    Text(
+                      widget.task.title,
+                      style: isDone
+                          ? TextStyle(
+                              color: Color(0xff656565),
+                              fontSize: 22,
+                              decoration: TextDecoration.lineThrough,
+                              fontWeight: FontWeight.bold)
+                          : TextStyle(
+                              color: Color(0xff656565),
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                Text(
+                  '4 pm',
+                  style: isDone
+                      ? TextStyle(
+                          color: Color(0xff656565),
+                          fontSize: 22,
+                          decoration: TextDecoration.lineThrough,
+                          fontWeight: FontWeight.bold)
+                      : TextStyle(
+                          color: Color(0xff656565),
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold),
+                ),
+              ],
+            ), // subtitle: Text(widget.task.description, style: widget.task.status == 'DONE' ? TextStyle(fontSize: 18, decoration: TextDecoration.lineThrough) : TextStyle(fontSize: 18),),
+          ),
         ),
       ),
     );
