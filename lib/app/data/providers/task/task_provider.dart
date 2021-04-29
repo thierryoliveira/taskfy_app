@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:todo_app/ui/task_model.dart';
+import 'package:todo_app/app/data/model/task/task_model.dart';
 
-const baseUrl = 'http://192.168.1.11:3000';
+const baseUrl = 'http://192.168.1.17:3000';
 
 class TaskProvider {
 

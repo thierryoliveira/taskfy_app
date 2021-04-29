@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get_connect/http/src/exceptions/exceptions.dart';
 import 'package:todo_app/app/data/model/login/access_token_model.dart';
 
-const baseUrl = 'http://192.168.1.11:3000';
+const baseUrl = 'http://192.168.1.17:3000';
 
 class AuthApiClient {
   final Dio dio = Dio();

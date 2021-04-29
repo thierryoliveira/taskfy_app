@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:todo_app/ui/task_model.dart';
+import 'package:todo_app/app/data/model/task/task_model.dart';
 import 'package:todo_app/app/data/repository/task/task_repository.dart';
 
 class TaskController extends GetxController {

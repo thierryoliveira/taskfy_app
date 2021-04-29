@@ -12,7 +12,7 @@ class TasksPage extends GetWidget<TaskController> {
     final height = size.height;
     final width = size.width;
     final BorderRadius radiusStyle = BorderRadius.only(
-        topLeft: Radius.circular(65),);
+        topLeft: Radius.circular(40), topRight: Radius.circular(40),);
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -30,7 +30,7 @@ class TasksPage extends GetWidget<TaskController> {
           Container(
             padding: EdgeInsets.only(left: width * 0.04, right: width * 0.04),
             color: kPrimaryColor,
-            height: height * 0.28,
+            height: height * 0.25,
             width: width,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,15 +69,14 @@ class TasksPage extends GetWidget<TaskController> {
               return _.taskList.length < 1 ? 
                 Center(child: CircularProgressIndicator(),)
               : Container(
-                  height: height * 0.72,
-                  padding: EdgeInsets.fromLTRB(
-                      width * 0.03, height * 0.05, width * 0.03, height * 0.01),
+                  height: height * 0.75,
                   decoration: BoxDecoration(
                     color: kLighterColor,
                     borderRadius: radiusStyle,
                   ),
-                  child: ListView.builder(
-                    
+                  child: ListView.separated(
+                    separatorBuilder: (BuildContext context, int index) => Divider(),
+                    padding: EdgeInsets.fromLTRB(size.width * 0.05, size.height * 0.05, size.width * 0.05, size.height * 0.05),
                     itemBuilder: (context, index){
                       return TaskItem(task: _.taskList[index],);
                     },
