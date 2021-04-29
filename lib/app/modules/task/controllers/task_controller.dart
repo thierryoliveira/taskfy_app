@@ -7,10 +7,12 @@ class TaskController extends GetxController {
 
   @override
   void onInit() {
-    final storage = GetStorage();
-    this._token = storage.read('accessToken');
+    _storage = GetStorage();
+    this._token = _storage.read('accessToken');
     super.onInit();
   }
+
+  GetStorage _storage;
   
   String _token;
 
@@ -20,6 +22,10 @@ class TaskController extends GetxController {
   get taskList => this._taskList;
   set taskList(value) =>this._taskList.value = value;
 
+  signOut(){
+    _storage.remove('accessToken');
+    Get.offAndToNamed('/login');
+  }
 
   getAll() async {
     var tasks = await repository.getAll(this._token);

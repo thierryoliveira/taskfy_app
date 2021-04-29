@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,31 +26,37 @@ class LoginPage extends GetView<LoginController> {
         backgroundColor: kPrimaryColor,
         body: ListView(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: height * 0.01),
-                  child: Text('taskdown',
-                      style: GoogleFonts.lobsterTwo(
-                          fontSize: height * 0.1, color: Colors.white)),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: height * 0.03),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: FaIcon(
-                      FontAwesomeIcons.tasks,
-                      color: Colors.white,
-                      size: height * 0.1,
-                    ),
-                  ),
-                  height: size.height * 0.28,
-                ),
-              ],
-            ),
             Container(
-              height: size.height * 0.62,
+              padding: EdgeInsets.only(top: size.height * 0.1),
+              height: size.height * 0.35,
+                child: SvgPicture.asset('assets/signin.svg')
+
+            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   children: [
+            //     Padding(
+            //       padding: EdgeInsets.only(top: height * 0.01),
+            //       child: Text('taskdown',
+            //           style: GoogleFonts.lobsterTwo(
+            //               fontSize: height * 0.1, color: Colors.white)),
+            //     ),
+            //     Container(
+            //       padding: EdgeInsets.only(top: height * 0.03),
+            //       child: Align(
+            //         alignment: Alignment.center,
+            //         child: FaIcon(
+            //           FontAwesomeIcons.tasks,
+            //           color: Colors.white,
+            //           size: height * 0.1,
+            //         ),
+            //       ),
+            //       height: size.height * 0.28,
+            //     ),
+            //   ],
+            // ),
+            Container(
+              height: size.height * 0.55,
               decoration: BoxDecoration(
                   color: kLighterColor,
                   borderRadius:
@@ -59,10 +66,15 @@ class LoginPage extends GetView<LoginController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
+                    margin: EdgeInsets.only(top: size.height * 0.02),
+                    alignment: Alignment.center,
+                    child: Text('Good morning!', style: TextStyle(fontSize: 24, color: kDarkBlueColor),),
+                  ),
+                  Container(
                     margin: EdgeInsets.only(
                         left: width * 0.03,
                         right: width * 0.03,
-                        top: height * 0.1),
+                        top: height * 0.03),
                     child: TextField(
                       controller: usernameController,
                       decoration: InputDecoration(
@@ -138,11 +150,12 @@ class LoginPage extends GetView<LoginController> {
                                     valueColor: AlwaysStoppedAnimation<Color>(
                                         Colors.white),
                                   ))
-                                : Text("login",
-                                    style: GoogleFonts.lobsterTwo(
-                                        fontSize: 28,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold)),
+                                : Text("sign in", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
+                                    // style: GoogleFonts.lobsterTwo(
+                                    //     fontSize: 28,
+                                    //     color: Colors.white,
+                                    //     fontWeight: FontWeight.bold)
+                                    ),
                           ),
                         ),
                       );

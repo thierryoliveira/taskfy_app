@@ -19,7 +19,7 @@ class _TaskItemState extends State<TaskItem> {
     return Dismissible(
       key: ValueKey(widget.task.id),
       secondaryBackground: swipeLeftBackground(),
-      background: swipeRightBackground(), 
+      background: !isDone ? swipeRightDoneBackground() : swipeRightBackground(), 
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
@@ -38,7 +38,7 @@ class _TaskItemState extends State<TaskItem> {
                       padding: EdgeInsets.only(right: size.width * 0.02),
                       child: Icon(
                         Icons.check_circle,
-                        color: Colors.green,
+                        color: kSuccessColor,
                       ),
                     ),
                   Text(
@@ -91,7 +91,7 @@ class _TaskItemState extends State<TaskItem> {
             ),
             Icon(
               Icons.check_circle,
-              color: Colors.white,
+              color: Colors.white,              
             ),
             Text(
               " Make done",
@@ -131,6 +131,38 @@ class _TaskItemState extends State<TaskItem> {
               color: Colors.white,
             ),
             
+            SizedBox(
+              width: 20,
+            ),
+          ],
+        ),
+        alignment: Alignment.centerRight,
+      ),
+    );
+  }
+  
+  Widget swipeRightDoneBackground() {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.0),
+          color: kRadicalRedColor,
+      ),
+      child: Align(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Icon(
+              Icons.delete,
+              color: Colors.white,
+            ),
+            Text(
+              " Delete",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+              textAlign: TextAlign.right,
+            ),
             SizedBox(
               width: 20,
             ),

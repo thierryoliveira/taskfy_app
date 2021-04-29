@@ -19,8 +19,9 @@ class TasksPage extends GetWidget<TaskController> {
         backgroundColor: kPrimaryColor,
         child: Icon(Icons.add, size: 40,),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
-        onPressed: () {  },
-
+        onPressed: () { 
+          controller.signOut();
+         },
       ),
       backgroundColor: kPrimaryColor,
       body: Column(
@@ -53,7 +54,9 @@ class TasksPage extends GetWidget<TaskController> {
                         borderRadius: BorderRadius.all(Radius.circular(20))
                       )
                     ),                
-                    onPressed: (){}, 
+                    onPressed: (){
+                      Get.toNamed('/signup');
+                    }, 
                     child: Text('Add new', style: TextStyle(color: kPrimaryColor, fontSize: 20),)
                     ),
                 ),

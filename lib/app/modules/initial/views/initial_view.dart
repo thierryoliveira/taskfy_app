@@ -18,7 +18,7 @@ class InitialPage extends GetView<InitialController> {
               end: Alignment.bottomLeft,
               colors: [
                 kLighterColor,
-                Color(0xff6C63FF),
+                kPrimaryColor,
               ]
             ),
             navigateAfterSeconds: controller.verifyAuthentication(),
@@ -28,7 +28,7 @@ class InitialPage extends GetView<InitialController> {
             alignment: Alignment.center,
                       child: SizedBox(            
               height: Get.size.height * 0.4,
-              child: SvgPicture.asset('assets/splashscreen.svg'),
+              child: SvgPicture.asset('assets/splashscreen2.svg'),
             ),
           )
         ],
