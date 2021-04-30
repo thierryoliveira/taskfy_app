@@ -50,11 +50,11 @@ class AuthController extends GetxController {
     }
   }
 
+  // signUp(String username, String password)
+
   writeAccessTokenOnStorage(String token) {
     box.write('accessToken', token);
   }
-
-  
 
   changeButtonLoading() {
     this.color = this.loading ? kRadicalRedColor : kPrimaryColor;

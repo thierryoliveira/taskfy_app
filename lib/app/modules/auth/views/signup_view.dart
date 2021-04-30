@@ -3,10 +3,10 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:todo_app/app/global/colors.dart';
+import 'package:todo_app/app/modules/auth/controllers/auth_controller.dart';
 
-import '../controllers/signup_controller.dart';
 
-class SignupView extends GetView<SignupController> {
+class SignupView extends GetView<AuthController> {
   final BorderRadius radiusStyle = BorderRadius.only(
         topLeft: Radius.circular(25), topRight: Radius.circular(25),);
 
