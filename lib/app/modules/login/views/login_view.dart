@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,7 +9,6 @@ import 'package:todo_app/app/modules/login/controllers/login_controller.dart';
 import 'package:todo_app/app/global/colors.dart';
 
 class LoginPage extends GetView<LoginController> {
-
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -27,11 +27,9 @@ class LoginPage extends GetView<LoginController> {
         body: ListView(
           children: [
             Container(
-              padding: EdgeInsets.only(top: size.height * 0.1),
-              height: size.height * 0.35,
-                child: SvgPicture.asset('assets/signin.svg')
-
-            ),
+                padding: EdgeInsets.only(top: size.height * 0.1),
+                height: size.height * 0.35,
+                child: SvgPicture.asset('assets/signin.svg')),
             // Row(
             //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             //   children: [
@@ -68,7 +66,10 @@ class LoginPage extends GetView<LoginController> {
                   Container(
                     margin: EdgeInsets.only(top: size.height * 0.02),
                     alignment: Alignment.center,
-                    child: Text('Good morning!', style: TextStyle(fontSize: 24, color: kDarkBlueColor),),
+                    child: Text(
+                      'Good morning!',
+                      style: TextStyle(fontSize: 24, color: kDarkBlueColor),
+                    ),
                   ),
                   Container(
                     margin: EdgeInsets.only(
@@ -133,11 +134,12 @@ class LoginPage extends GetView<LoginController> {
                           height: 54,
                           width: width * 0.94,
                           child: ElevatedButton(
-                            onPressed: (){
-                              _.signIn(usernameController.text, passwordController.text);
-                                if (_.signedIn) {
-                                  Get.toNamed('/tasks');
-                                }                              
+                            onPressed: () {
+                              _.signIn(usernameController.text,
+                                  passwordController.text);
+                              if (_.signedIn) {
+                                Get.toNamed('/tasks');
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               primary: _.color,
@@ -150,17 +152,48 @@ class LoginPage extends GetView<LoginController> {
                                     valueColor: AlwaysStoppedAnimation<Color>(
                                         Colors.white),
                                   ))
-                                : Text("sign in", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
+                                : Text(
+                                    "sign in",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 26,
+                                        fontWeight: FontWeight.bold),
                                     // style: GoogleFonts.lobsterTwo(
                                     //     fontSize: 28,
                                     //     color: Colors.white,
                                     //     fontWeight: FontWeight.bold)
-                                    ),
+                                  ),
                           ),
                         ),
                       );
                     },
                   ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(
+                        width * 0.04, height * 0.03, width * 0.04, 0),
+                    width: width,
+                    decoration: BoxDecoration(
+                        border: Border(
+                            top: BorderSide(
+                                width: 2,
+                                color: kLightGreyColor.withOpacity(0.3)))),
+                  ),
+                  Container(
+                      width: width,
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(top: height * 0.03),
+                      child: RichText(
+                        text: TextSpan(
+                            text: 'Do not have an account yet? ',
+                            style: TextStyle(fontSize: 18, color: kDarkBlueColor),
+                            children: [
+                              TextSpan(
+                                  text: 'Create now!',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () => print('click')),
+                            ]),
+                      ))
                 ],
               ),
             ),
