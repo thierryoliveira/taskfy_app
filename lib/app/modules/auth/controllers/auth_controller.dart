@@ -17,6 +17,19 @@ class AuthController extends GetxController {
   get loading => this._loading.value;
   set loading(value) => this._loading.value = value;
 
+  final _obscureTextPassword = true.obs;
+  get obscureTextPassword => this._obscureTextPassword.value;
+  set obscureTextPassword(value) => this._obscureTextPassword.value = value;
+
+  changeObscurePasswordValue() => obscureTextPassword = !obscureTextPassword;
+
+  final _obscureTextPasswordConfirmation = true.obs;
+  get obscureTextPasswordConfirmation => this._obscureTextPasswordConfirmation.value;
+  set obscureTextPasswordConfirmation(value) => this._obscureTextPasswordConfirmation.value = value;
+
+  changeObscurePasswordConfirmationValue() => obscureTextPasswordConfirmation = !obscureTextPasswordConfirmation;
+
+
   final _signedIn = false.obs;
   get signedIn => this._signedIn.value;
   set signedIn(value) => this._signedIn.value = value;
@@ -50,7 +63,18 @@ class AuthController extends GetxController {
     }
   }
 
-  // signUp(String username, String password)
+  signUp(String username, String password) {
+    if ((username != null && username.isNotEmpty) &&
+        (password != null && password.isNotEmpty)) {
+          this.loading = true;
+          changeButtonLoading();
+          repository.signUp(username, password).then((bool success){
+            if (success) {
+              signIn(username, password);
+            }
+          });
+        }
+  }
 
   writeAccessTokenOnStorage(String token) {
     box.write('accessToken', token);

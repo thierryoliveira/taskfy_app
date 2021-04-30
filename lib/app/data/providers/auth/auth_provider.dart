@@ -24,4 +24,20 @@ class AuthApiClient {
     return token;
   }
 
+  Future<bool> signUp(String username, String password) async {
+    bool _success = false;
+    dio.options.contentType = Headers.jsonContentType;
+    try {
+      var response = await dio.post(baseUrl + '/auth/signup/',
+          data: jsonEncode({'username': username, 'password': password}),
+          options: Options(contentType: Headers.jsonContentType));
+      if (response.statusCode.toString() == '201') {
+        _success = true;
+      }
+    } catch (e) {
+      print(e);
+    }
+    return _success;
+  }
+
 }

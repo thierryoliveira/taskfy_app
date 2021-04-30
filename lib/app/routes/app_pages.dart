@@ -3,7 +3,6 @@ import 'package:todo_app/app/modules/auth/bindings/auth_binding.dart';
 import 'package:todo_app/app/modules/auth/views/signin_view.dart';
 import 'package:todo_app/app/modules/initial/bindings/initial_binding.dart';
 import 'package:todo_app/app/modules/initial/views/initial_view.dart';
-import 'package:todo_app/app/modules/signup/bindings/signup_binding.dart';
 import 'package:todo_app/app/modules/auth/views/signup_view.dart';
 import 'package:todo_app/app/modules/task/bindings/task_binding.dart';
 import 'package:todo_app/app/modules/task/views/tasks_page.dart';
@@ -26,7 +25,7 @@ class AppPages {
     GetPage(
       name: Routes.SIGNUP,
       page: () => SignupView(),
-      binding: SignupBinding(),
+      binding: AuthBinding(),
     ),
   ];
 }

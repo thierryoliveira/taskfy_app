@@ -122,8 +122,6 @@ class SignInPage extends GetView<AuthController> {
                     ),
                   ),
                   GetX<AuthController>(
-                    initState: (_) {},
-                    // init: LoginController(repository: LoginRepository(apiClient: ApiClient(dio: Dio()))),
                     builder: (_) {
                       return Center(
                         child: Container(
@@ -136,10 +134,7 @@ class SignInPage extends GetView<AuthController> {
                           child: ElevatedButton(
                             onPressed: () {
                               _.signIn(usernameController.text,
-                                  passwordController.text);
-                              if (_.signedIn) {
-                                Get.toNamed('/tasks');
-                              }
+                                  passwordController.text);                              
                             },
                             style: ElevatedButton.styleFrom(
                               primary: _.color,
