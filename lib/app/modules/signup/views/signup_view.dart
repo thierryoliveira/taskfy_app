@@ -8,7 +8,7 @@ import '../controllers/signup_controller.dart';
 
 class SignupView extends GetView<SignupController> {
   final BorderRadius radiusStyle = BorderRadius.only(
-        topLeft: Radius.circular(40), topRight: Radius.circular(40),);
+        topLeft: Radius.circular(25), topRight: Radius.circular(25),);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class SignupView extends GetView<SignupController> {
             height: height * 0.5,
             decoration: BoxDecoration(
               color: kLighterColor,
-              borderRadius: BorderRadius.all(Radius.circular(50))
+              borderRadius: BorderRadius.all(Radius.circular(25))
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -130,7 +130,7 @@ class SignupView extends GetView<SignupController> {
                               primary: kPrimaryColor,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.only(
-        bottomLeft: Radius.circular(40), bottomRight: Radius.circular(40),)),
+        bottomLeft: Radius.circular(25), bottomRight: Radius.circular(25),)),
                             ),
                             child: isloading
                                 ? Center(

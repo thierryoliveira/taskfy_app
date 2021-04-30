@@ -191,7 +191,7 @@ class LoginPage extends GetView<LoginController> {
                                   text: 'Create now!',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                   recognizer: TapGestureRecognizer()
-                                    ..onTap = () => print('click')),
+                                    ..onTap = () => Get.toNamed('/signup')),
                             ]),
                       ))
                 ],
