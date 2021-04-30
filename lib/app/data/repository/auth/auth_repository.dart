@@ -1,7 +1,7 @@
-import 'package:todo_app/app/data/model/login/access_token_model.dart';
-import 'package:todo_app/app/data/providers/login/auth_provider.dart';
+import 'package:todo_app/app/data/model/auth/access_token_model.dart';
+import 'package:todo_app/app/data/providers/auth/auth_provider.dart';
 
-class LoginRepository {
+class AuthRepository {
 
 final AuthApiClient apiClient = AuthApiClient();
 

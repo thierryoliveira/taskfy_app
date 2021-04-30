@@ -16,7 +16,7 @@ class InitialController extends GetxController {
         return Routes.TASKS;
       }
     }
-    return Routes.LOGIN;
+    return Routes.SIGNIN;
   }
 
   String getTokenFromStorage() {

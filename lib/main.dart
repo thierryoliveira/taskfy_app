@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:todo_app/app/modules/login/bindings/login_binding.dart';
 import 'package:todo_app/app/routes/app_pages.dart';
 import 'package:todo_app/app/routes/app_routes.dart';
 import 'package:todo_app/app/global/colors.dart';

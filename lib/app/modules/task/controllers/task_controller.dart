@@ -24,7 +24,7 @@ class TaskController extends GetxController {
 
   signOut(){
     _storage.remove('accessToken');
-    Get.offAndToNamed('/login');
+    Get.offAndToNamed('/signin');
   }
 
   getAll() async {

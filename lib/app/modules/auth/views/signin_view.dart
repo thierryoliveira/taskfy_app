@@ -5,10 +5,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:todo_app/app/modules/login/controllers/login_controller.dart';
 import 'package:todo_app/app/global/colors.dart';
+import 'package:todo_app/app/modules/auth/controllers/auth_controller.dart';
 
-class LoginPage extends GetView<LoginController> {
+class SignInPage extends GetView<AuthController> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -121,7 +121,7 @@ class LoginPage extends GetView<LoginController> {
                       ),
                     ),
                   ),
-                  GetX<LoginController>(
+                  GetX<AuthController>(
                     initState: (_) {},
                     // init: LoginController(repository: LoginRepository(apiClient: ApiClient(dio: Dio()))),
                     builder: (_) {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:todo_app/app/data/repository/login/login_repository.dart';
+import 'package:todo_app/app/data/repository/auth/auth_repository.dart';
 import 'package:todo_app/app/global/colors.dart';
 
-class LoginController extends GetxController {
-  final repository = Get.find<LoginRepository>();
+class AuthController extends GetxController {
+  final repository = Get.find<AuthRepository>();
 
   final box = GetStorage();
 
