@@ -56,7 +56,7 @@ class TasksPage extends GetWidget<TaskController> {
                           fontWeight: FontWeight.w500),
                     ),
                     Obx(() => Text(
-                          controller.taskList.length > 0 ? "${controller.taskList.length} tasks" : "Nothing to do",
+                          controller.taskList.length > 0 ? "${controller.taskList.length} tasks" : "No pending tasks",
                           style: TextStyle(color: Colors.white, fontSize: 20),
                         ))
                   ],
