@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:todo_app/app/global/colors.dart';
 import 'package:todo_app/app/modules/auth/controllers/auth_controller.dart';
 
-class SignupView extends GetView<AuthController> {
+class SignUpPage extends GetView<AuthController> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordConfirmationController =

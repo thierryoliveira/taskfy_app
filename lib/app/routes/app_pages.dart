@@ -5,6 +5,7 @@ import 'package:todo_app/app/modules/initial/bindings/initial_binding.dart';
 import 'package:todo_app/app/modules/initial/views/initial_view.dart';
 import 'package:todo_app/app/modules/auth/views/signup_view.dart';
 import 'package:todo_app/app/modules/task/bindings/task_binding.dart';
+import 'package:todo_app/app/modules/task/views/addtask_view.dart';
 import 'package:todo_app/app/modules/task/views/tasks_view.dart';
 import 'package:todo_app/app/routes/app_routes.dart';
 
@@ -15,17 +16,29 @@ class AppPages {
       page: () => InitialPage(), //InitialView(),
       binding: InitialBinding(), //InitialBinding(),
     ),
+
     GetPage(
       name: Routes.SIGNIN,
       page: () => SignInPage(), //InitialView(),
       binding: AuthBinding(), //InitialBinding(),
     ),
+
     GetPage(
-        name: Routes.TASKS, page: () => TasksPage(), binding: TaskBinding()),
+      name: Routes.TASKS, 
+      page: () => TasksPage(), 
+      binding: TaskBinding()
+    ),
+
     GetPage(
       name: Routes.SIGNUP,
-      page: () => SignupView(),
+      page: () => SignUpPage(),
       binding: AuthBinding(),
+    ),
+
+    GetPage(
+      name: Routes.ADDTASK,
+      page: () => AddTaskPage(),
+      binding: TaskBinding()
     ),
   ];
 }

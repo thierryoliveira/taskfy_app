@@ -27,7 +27,7 @@ class TasksPage extends GetWidget<TaskController> {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(15))),
         onPressed: () {
-          controller.signOut();
+          Get.toNamed('/addtask');
         },
       ),
       backgroundColor: kPrimaryColor,
@@ -55,10 +55,10 @@ class TasksPage extends GetWidget<TaskController> {
                           fontSize: 42,
                           fontWeight: FontWeight.w500),
                     ),
-                    Text(
-                      '7 tasks',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    )
+                    Obx(() => Text(
+                          controller.taskList.length > 0 ? "${controller.taskList.length} tasks" : "Nothing to do",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ))
                   ],
                 ),
                 Center(
@@ -70,7 +70,7 @@ class TasksPage extends GetWidget<TaskController> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20)))),
                       onPressed: () {
-                        Get.toNamed('/signup');
+                        Get.toNamed('/addtask');
                       },
                       child: Text(
                         'Add new',

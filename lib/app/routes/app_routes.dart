@@ -3,4 +3,5 @@ abstract class Routes {
   static const SIGNIN = '/signin';
   static const TASKS = '/tasks';
   static const SIGNUP = '/signup';
+  static const ADDTASK = '/addtask';
 }
