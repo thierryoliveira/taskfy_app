@@ -5,7 +5,7 @@ import 'package:todo_app/app/modules/initial/bindings/initial_binding.dart';
 import 'package:todo_app/app/modules/initial/views/initial_view.dart';
 import 'package:todo_app/app/modules/auth/views/signup_view.dart';
 import 'package:todo_app/app/modules/task/bindings/task_binding.dart';
-import 'package:todo_app/app/modules/task/views/tasks_page.dart';
+import 'package:todo_app/app/modules/task/views/tasks_view.dart';
 import 'package:todo_app/app/routes/app_routes.dart';
 
 class AppPages {
