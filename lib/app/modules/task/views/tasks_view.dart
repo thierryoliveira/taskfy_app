@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/app/modules/task/controllers/task_controller.dart';
@@ -17,19 +18,19 @@ class TasksPage extends GetWidget<TaskController> {
     );
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: kLighterColor,
-        child: Icon(
-          Icons.add,
-          size: 40,
-          color: kPrimaryColor,
-        ),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(15))),
-        onPressed: () {
-          Get.toNamed('/addtask');
-        },
-      ),
+      floatingActionButton: Obx(() => FloatingActionButton(
+            backgroundColor: controller.taskList.length > 0 ? kPrimaryColor : kLighterColor,
+            child: Icon(
+              Icons.add,
+              size: 40,
+              color: controller.taskList.length > 0 ? kLighterColor : kPrimaryColor,
+            ),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15))),
+            onPressed: () {
+              Get.toNamed('/addtask');
+            },
+          )),
       backgroundColor: kPrimaryColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -42,40 +43,39 @@ class TasksPage extends GetWidget<TaskController> {
             width: width,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Today',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 42,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    Obx(() => Text(
-                          controller.taskList.length > 0 ? "${controller.taskList.length} tasks" : "No pending tasks",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ))
-                  ],
-                ),
+                Obx(() => Text(
+                      controller.taskList.length > 0
+                          ? "${controller.taskList.length} tasks"
+                          : "No pending tasks",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    )),
                 Center(
-                  child: ElevatedButton(
+                  child: Obx(() => ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
+                          primary: kDarkBlueColor,
                           padding: EdgeInsets.all(20),
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20)))),
                       onPressed: () {
-                        Get.toNamed('/addtask');
+                        DatePicker.showDatePicker(context,
+                            minTime:
+                                DateTime.now().subtract(Duration(days: 60)),
+                            maxTime: DateTime.now().add(Duration(days: 60)),
+                            locale: LocaleType.en, onChanged: (date) {
+                          print(date);
+                          controller.changeSelectedDate(date);
+                        });
                       },
                       child: Text(
-                        'Add new',
-                        style: TextStyle(color: kPrimaryColor, fontSize: 20),
-                      )),
+                        controller.returnSelectedDate(),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500),
+                      ))),
                 ),
               ],
             ),

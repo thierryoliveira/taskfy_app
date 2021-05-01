@@ -39,9 +39,9 @@ class AuthController extends GetxController {
         (password != null && password.isNotEmpty)) {
       this.loading = true;
       changeButtonLoading();
-      repository.signIn(username, password).then((data) {
-        if (data.accessToken != null && data.accessToken.isNotEmpty) {
-          writeAccessTokenOnStorage(data.accessToken);
+      repository.signIn(username, password).then((result) {
+        if (result.success) {
+          writeAccessTokenOnStorage(result.data.accessToken);
           this.loading = false;
           this.signedIn = true;
           changeButtonLoading();
@@ -51,8 +51,8 @@ class AuthController extends GetxController {
           changeButtonLoading();
   
           Get.snackbar(
-            "Invalid credentials",
-            "Please, check your username and password",
+            "Error",
+            result.message,
             snackPosition: SnackPosition.BOTTOM,
             colorText: Colors.white,
             backgroundColor: kRadicalRedColor,
