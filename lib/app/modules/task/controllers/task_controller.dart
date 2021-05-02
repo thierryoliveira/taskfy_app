@@ -46,6 +46,12 @@ class TaskController extends GetxController {
       String selectedDateFormatted = formatter.format(selectedDate);
       String currentDateFormatted = formatter.format(DateTime.now());
       return selectedDateFormatted == currentDateFormatted ? 'Today' : selectedDateFormatted;
+  }
 
+  String returnSelectedDateAndTime(){
+      DateFormat formatter = DateFormat('yyyy/MM/dd - hh:mm');
+      String selectedDateFormatted = formatter.format(selectedDate);
+      String currentDateFormatted = formatter.format(DateTime.now());
+      return selectedDateFormatted == currentDateFormatted ? 'Today' : selectedDateFormatted;
   }
 }
