@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
+import 'package:todo_app/app/data/model/task/task_status_model.dart';
 import 'package:todo_app/app/global/colors.dart';
 import 'package:todo_app/app/modules/task/controllers/task_controller.dart';
+import 'package:todo_app/app/modules/task/views/widgets/status_button_filter.dart';
 
 class AddTaskPage extends GetView<TaskController> {
   @override
@@ -19,7 +21,7 @@ class AddTaskPage extends GetView<TaskController> {
         backgroundColor: kPrimaryColor,
         body: SafeArea(
           child: Container(
-            padding: EdgeInsets.only(top: height * 0.075),
+            padding: EdgeInsets.only(top: height * 0.05),
             width: width,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,7 +36,7 @@ class AddTaskPage extends GetView<TaskController> {
                   textAlign: TextAlign.center,
                 ),
                 Container(
-                  height: size.height * 0.75,
+                  height: size.height * 0.8,
                   padding: EdgeInsets.fromLTRB(
                       width * 0.04, height * 0.05, width * 0.04, height * 0.03),
                   width: size.width,
@@ -46,6 +48,50 @@ class AddTaskPage extends GetView<TaskController> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Obx(() => ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  // minimumSize: Size(size.width * 0.23, 0),
+                                  primary: controller.openStatusColor,
+                                  padding: EdgeInsets.all(20),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20)))),
+                              onPressed: () {
+                                controller
+                                    .changeSelectedFilter(TaskStatus.OPEN);
+                              },
+                              child: Icon(Icons.hourglass_empty))),
+                          Obx(() => ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  // minimumSize: Size(size.width * 0.23, 0),
+                                  primary: controller.inProgressStatusColor,
+                                  padding: EdgeInsets.all(20),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20)))),
+                              onPressed: () {
+                                controller.changeSelectedFilter(
+                                    TaskStatus.IN_PROGRESS);
+                              },
+                              child: Icon(Icons.pending_actions))),
+                          Obx(() => ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  // minimumSize: Size(size.width * 0.2, 0),
+                                  primary: controller.doneStatusColor,
+                                  padding: EdgeInsets.all(20),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20)))),
+                              onPressed: () {
+                                controller
+                                    .changeSelectedFilter(TaskStatus.DONE);
+                              },
+                              child: Icon(Icons.done))),
+                        ],
+                      ),
                       Column(
                         children: [
                           TextField(
@@ -70,7 +116,7 @@ class AddTaskPage extends GetView<TaskController> {
                           Padding(
                             padding: EdgeInsets.only(top: height * 0.02),
                             child: TextField(
-                              maxLines: 4,
+                              maxLines: 2,
                               decoration: InputDecoration(
                                 labelText: 'Description',
                                 hintStyle: TextStyle(color: Color(0xffa0a0a0)),
@@ -92,10 +138,7 @@ class AddTaskPage extends GetView<TaskController> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: height * 0.02),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Obx(() => ElevatedButton(
+                            child: Obx(() => ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                         minimumSize: Size(width * 0.92, 0),
                                         primary: kPrimaryColor,
@@ -122,14 +165,10 @@ class AddTaskPage extends GetView<TaskController> {
                                           fontSize: 20,
                                           fontWeight: FontWeight.w500),
                                     ))),
-                              ],
-                            ),
                           ),
                         ],
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(
-                            width * 0.04, height * 0.03, width * 0.04, 0),
                         width: width,
                         decoration: BoxDecoration(
                             border: Border(
@@ -137,23 +176,22 @@ class AddTaskPage extends GetView<TaskController> {
                                     width: 2,
                                     color: kLightGreyColor.withOpacity(0.3)))),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(bottom: height * 0.02),
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                minimumSize: Size(width * 0.92, 0),
-                                primary: kPrimaryColor,
-                                padding: EdgeInsets.all(20),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)))),
-                            onPressed: () {},
-                            child: Text('Done',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500))),
-                      ),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: Size(width * 0.92, 0),
+                              primary: kPrimaryColor,
+                              padding: EdgeInsets.all(20),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)))),
+                          onPressed: () {
+                            controller.signOut();
+                          },
+                          child: Text('Done',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500))),
                     ],
                   ),
                 ),
@@ -161,5 +199,12 @@ class AddTaskPage extends GetView<TaskController> {
             ),
           ),
         ));
+  }
+
+  List<DropdownMenuItem> returnDropdownItems() {
+    List<DropdownMenuItem> items = <DropdownMenuItem>[];
+    controller.statusList.forEach((status) =>
+        items.add(DropdownMenuItem(child: Text(status.toString()))));
+    return items;
   }
 }

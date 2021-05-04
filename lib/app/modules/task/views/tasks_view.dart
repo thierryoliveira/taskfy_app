@@ -19,11 +19,14 @@ class TasksPage extends GetWidget<TaskController> {
 
     return Scaffold(
       floatingActionButton: Obx(() => FloatingActionButton(
-            backgroundColor: controller.taskList.length > 0 ? kPrimaryColor : kLighterColor,
+            backgroundColor:
+                controller.taskList.length > 0 ? kPrimaryColor : kLighterColor,
             child: Icon(
               Icons.add,
               size: 40,
-              color: controller.taskList.length > 0 ? kLighterColor : kPrimaryColor,
+              color: controller.taskList.length > 0
+                  ? kLighterColor
+                  : kPrimaryColor,
             ),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15))),
@@ -45,12 +48,32 @@ class TasksPage extends GetWidget<TaskController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Obx(() => Text(
-                      controller.taskList.length > 0
-                          ? "${controller.taskList.length} tasks"
-                          : "No pending tasks",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    )),
+                Container(
+                  width: size.width * 0.58,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'search',
+                      hintStyle: TextStyle(color: Color(0xffa0a0a0)),
+                      prefixIcon: Icon(Icons.search),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: kLightGreyColor, width: 1),
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: kPrimaryColor, width: 1),
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                    ),
+                  ),
+                ),
+                // Obx(() => Text(
+                //       controller.taskList.length > 0
+                //           ? "${controller.taskList.length} tasks remaining"
+                //           : "No pending tasks",
+                //       style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                //     )),
                 Center(
                   child: Obx(() => ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -70,7 +93,8 @@ class TasksPage extends GetWidget<TaskController> {
                         });
                       },
                       child: Text(
-                        controller.returnSelectedDate(),
+                        // controller.returnSelectedDate(),
+                        'add new',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,

@@ -151,9 +151,12 @@ class _TaskItemState extends State<TaskItem> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Icon(
-              Icons.delete,
-              color: Colors.white,
+            Padding(
+              padding: EdgeInsets.only(left: Get.size.width * 0.04),
+              child: Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
             ),
             Text(
               " Delete",
