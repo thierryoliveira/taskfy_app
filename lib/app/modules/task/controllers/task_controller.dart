@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app/app/data/model/task/dto/create_task_dto.dart';
 import 'package:todo_app/app/data/model/task/task_model.dart';
 import 'package:todo_app/app/data/model/task/task_status_model.dart';
 import 'package:todo_app/app/data/repository/task/task_repository.dart';
@@ -63,6 +64,21 @@ class TaskController extends GetxController {
     }
   }
 
+  createTask(String title, String description) async {
+    CreateTaskDTO dto = CreateTaskDTO();
+    dto.title = title;
+    dto.description = description;
+    dto.dateTime = formatDateAndTime();
+    var result = await repository.createTask(dto, this._token);
+
+  if(result.title != null && result.title.isNotEmpty){
+    getAll();
+    Get.offAndToNamed('/tasks');
+  }
+
+    print(result);
+  }
+
   String returnSelectedDate() {
     DateFormat formatter = DateFormat('yyyy-MM-dd');
     String selectedDateFormatted = formatter.format(selectedDate);
@@ -79,6 +95,12 @@ class TaskController extends GetxController {
     return selectedDateFormatted == currentDateFormatted
         ? 'Today'
         : selectedDateFormatted;
+  }
+
+  String formatDateAndTime() {
+    DateFormat formatter = DateFormat('yyyy/MM/dd - hh:mm');
+    String selectedDateFormatted = formatter.format(selectedDate);
+    return selectedDateFormatted;
   }
 
   fillStatusList() {
@@ -98,6 +120,8 @@ class TaskController extends GetxController {
     }
     return response;
   }
+
+  
 
   changeSelectedFilter(TaskStatus status) {
     var isAlreadySelectedFilter = checkAlreadySelectedFilter(status);

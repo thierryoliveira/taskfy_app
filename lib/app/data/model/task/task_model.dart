@@ -14,17 +14,20 @@ class Task {
         this.title,
         this.description,
         this.status,
+        this.dateTime
     });
 
     int id;
     String title;
     String description;
     String status;
+    String dateTime;
 
     factory Task.fromJson(Map<String, dynamic> json) => Task(
         id: json["id"],
         title: json["title"],
         description: json["description"],
+        dateTime: json["dateTime"],
         status: json["status"],
     );
 
@@ -33,5 +36,6 @@ class Task {
         "title": title,
         "description": description,
         "status": status,
+        "dateTime": dateTime,
     };
 }

@@ -7,6 +7,10 @@ import 'package:todo_app/app/modules/task/controllers/task_controller.dart';
 import 'package:todo_app/app/modules/task/views/widgets/status_button_filter.dart';
 
 class AddTaskPage extends GetView<TaskController> {
+
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();  
+
   @override
   Widget build(BuildContext context) {
     final size = Get.size;
@@ -95,6 +99,7 @@ class AddTaskPage extends GetView<TaskController> {
                       Column(
                         children: [
                           TextField(
+                            controller: titleController,
                             decoration: InputDecoration(
                               hintText: 'Title',
                               hintStyle: TextStyle(color: Color(0xffa0a0a0)),
@@ -116,6 +121,7 @@ class AddTaskPage extends GetView<TaskController> {
                           Padding(
                             padding: EdgeInsets.only(top: height * 0.02),
                             child: TextField(
+                              controller: descriptionController,
                               maxLines: 2,
                               decoration: InputDecoration(
                                 labelText: 'Description',
@@ -185,7 +191,7 @@ class AddTaskPage extends GetView<TaskController> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20)))),
                           onPressed: () {
-                            controller.signOut();
+                            controller.createTask(titleController.text, descriptionController.text);
                           },
                           child: Text('Done',
                               style: TextStyle(

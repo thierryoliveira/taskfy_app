@@ -54,7 +54,7 @@ class TasksPage extends GetWidget<TaskController> {
                     decoration: InputDecoration(
                       hintText: 'search',
                       hintStyle: TextStyle(color: Color(0xffa0a0a0)),
-                      prefixIcon: Icon(Icons.search),
+                      suffixIcon: Icon(Icons.search),
                       filled: true,
                       fillColor: Colors.white,
                       enabledBorder: OutlineInputBorder(
@@ -75,7 +75,7 @@ class TasksPage extends GetWidget<TaskController> {
                 //       style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                 //     )),
                 Center(
-                  child: Obx(() => ElevatedButton(
+                  child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           primary: kDarkBlueColor,
                           padding: EdgeInsets.all(20),
@@ -83,15 +83,7 @@ class TasksPage extends GetWidget<TaskController> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20)))),
                       onPressed: () {
-                        DatePicker.showDatePicker(context,
-                            minTime:
-                                DateTime.now().subtract(Duration(days: 60)),
-                            maxTime: DateTime.now().add(Duration(days: 60)),
-                            locale: LocaleType.en, onChanged: (date) {
-                          print(date);
-                          controller.changeSelectedDate(date);
-                        });
-                      },
+                                             },
                       child: Text(
                         // controller.returnSelectedDate(),
                         'add new',
@@ -99,7 +91,7 @@ class TasksPage extends GetWidget<TaskController> {
                             color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.w500),
-                      ))),
+                      )),
                 ),
               ],
             ),
