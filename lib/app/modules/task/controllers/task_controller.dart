@@ -64,6 +64,26 @@ class TaskController extends GetxController {
     }
   }
 
+  deleteTask(int taskId) async {
+    var result = await repository.deleteTask(taskId, this._token);
+    if (result.success)
+      Get.snackbar(
+        "Success",
+        "Task deleted",
+        snackPosition: SnackPosition.BOTTOM,
+        colorText: Colors.white,
+        backgroundColor: kSuccessColor,
+      );
+    else
+      Get.snackbar(
+        "Error",
+        result.message,
+        snackPosition: SnackPosition.BOTTOM,
+        colorText: Colors.white,
+        backgroundColor: kRadicalRedColor,
+      );
+  }
+
   createTask(String title, String description) async {
     CreateTaskDTO dto = CreateTaskDTO();
     dto.title = title;
@@ -71,10 +91,10 @@ class TaskController extends GetxController {
     dto.dateTime = formatDateAndTime();
     var result = await repository.createTask(dto, this._token);
 
-  if(result.title != null && result.title.isNotEmpty){
-    getAll();
-    Get.offAndToNamed('/tasks');
-  }
+    if (result.title != null && result.title.isNotEmpty) {
+      getAll();
+      Get.offAndToNamed('/tasks');
+    }
 
     print(result);
   }
@@ -120,8 +140,6 @@ class TaskController extends GetxController {
     }
     return response;
   }
-
-  
 
   changeSelectedFilter(TaskStatus status) {
     var isAlreadySelectedFilter = checkAlreadySelectedFilter(status);

@@ -83,7 +83,7 @@ class TasksPage extends GetWidget<TaskController> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20)))),
                       onPressed: () {
-                                             },
+                                      controller.signOut();       },
                       child: Text(
                         // controller.returnSelectedDate(),
                         'add new',

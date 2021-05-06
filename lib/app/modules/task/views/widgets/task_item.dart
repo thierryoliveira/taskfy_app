@@ -2,24 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/app/data/model/task/task_model.dart';
 import 'package:todo_app/app/global/colors.dart';
+import 'package:todo_app/app/modules/task/controllers/task_controller.dart';
 
-class TaskItem extends StatefulWidget {
-  const TaskItem({Key key, this.task}) : super(key: key);
+// class TaskItem extends StatefulWidget {
+//   const TaskItem({Key key, this.task}) : super(key: key);
 
-  @override
-  _TaskItemState createState() => _TaskItemState();
+//   @override
+//   _TaskItemState createState() => _TaskItemState();
+//   final Task task;
+// }
+
+class TaskItem extends GetWidget<TaskController> {
   final Task task;
-}
-
-class _TaskItemState extends State<TaskItem> {
+  const TaskItem({this.task});
   @override
   Widget build(BuildContext context) {
-    final bool isDone = widget.task.status == 'DONE';
+    final bool isDone = task.status == 'DONE';
     final size = Get.size;
     return Dismissible(
-      key: ValueKey(widget.task.id),
+      key: ValueKey(task.id),
       secondaryBackground: swipeLeftBackground(),
-      background: !isDone ? swipeRightDoneBackground() : swipeRightBackground(), 
+      background: isDone ? swipeRightDoneBackground() : swipeRightBackground(), 
+      onDismissed: (direction){
+        if(direction == DismissDirection.endToStart){
+          controller.deleteTask(task.id);
+        }
+      },
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
@@ -42,7 +50,7 @@ class _TaskItemState extends State<TaskItem> {
                       ),
                     ),
                   Text(
-                    widget.task.title,
+                    task.title,
                     style: isDone
                         ? TextStyle(
                             color: Color(0xff656565),
