@@ -1,8 +1,8 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app/app/data/model/enums/task-status.enum.dart';
 import 'package:todo_app/app/data/model/task/dto/create_task_dto.dart';
 import 'package:todo_app/app/data/model/task/task_model.dart';
 import 'package:todo_app/app/data/model/task/task_status_model.dart';
@@ -75,6 +75,30 @@ class TaskController extends GetxController {
         backgroundColor: kSuccessColor,
       );
     else
+      Get.snackbar(
+        "Error",
+        result.message,
+        snackPosition: SnackPosition.BOTTOM,
+        colorText: Colors.white,
+        backgroundColor: kRadicalRedColor,
+      );
+  }
+
+  completeTask(int taskId) async {
+    TaskStatusModel task = TaskStatusModel(taskId, TaskStatus.DONE);
+
+    var result = await repository.updateTaskStatus(task, this._token);
+    if (result.success) {
+      // TODO: RELOAD TASKS AFTER COMPLETE ONE
+      await getAll();
+      Get.snackbar(
+        "Well done!",
+        "Task completed",
+        snackPosition: SnackPosition.BOTTOM,
+        colorText: Colors.white,
+        backgroundColor: kSuccessColor,
+      );
+    } else
       Get.snackbar(
         "Error",
         result.message,

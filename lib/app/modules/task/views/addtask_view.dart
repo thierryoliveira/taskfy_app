@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
-import 'package:todo_app/app/data/model/task/task_status_model.dart';
+import 'package:todo_app/app/data/model/enums/task-status.enum.dart';
 import 'package:todo_app/app/global/colors.dart';
 import 'package:todo_app/app/modules/task/controllers/task_controller.dart';
-import 'package:todo_app/app/modules/task/views/widgets/status_button_filter.dart';
 
 class AddTaskPage extends GetView<TaskController> {
 

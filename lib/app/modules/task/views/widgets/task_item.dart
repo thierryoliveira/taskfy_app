@@ -24,9 +24,10 @@ class TaskItem extends GetWidget<TaskController> {
       secondaryBackground: swipeLeftBackground(),
       background: isDone ? swipeRightDoneBackground() : swipeRightBackground(), 
       onDismissed: (direction){
-        if(direction == DismissDirection.endToStart){
+        if(direction == DismissDirection.endToStart)
           controller.deleteTask(task.id);
-        }
+        else if(direction == DismissDirection.startToEnd)
+          controller.completeTask(task.id);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -41,12 +42,15 @@ class TaskItem extends GetWidget<TaskController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  if (!isDone)
                     Padding(
                       padding: EdgeInsets.only(right: size.width * 0.02),
-                      child: Icon(
+                      child: isDone ? Icon(
                         Icons.check_circle,
                         color: kSuccessColor,
+                      ) :
+                       Icon(
+                        Icons.pending_actions,
+                        color: kComplementaryColor,
                       ),
                     ),
                   Text(

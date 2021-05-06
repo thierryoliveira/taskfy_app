@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:todo_app/app/data/interfaces/task_interface.dart';
 import 'package:todo_app/app/data/model/task/dto/create_task_dto.dart';
 import 'package:todo_app/app/data/model/task/task_model.dart';
+import 'package:todo_app/app/data/model/task/task_status_model.dart';
 import 'package:todo_app/app/global/models/base_result_model.dart';
 
 const baseUrl = 'http://192.168.1.17:3000';
@@ -41,6 +42,26 @@ getAll(String token) async {
     try {
       dio.options.headers['Authorization'] = 'bearer ' + token;
       var response = await dio.delete("$baseUrl/tasks/$taskId");
+      if(response.statusCode.toString() == '200'){
+        result.success = true;
+        result.data = true; 
+      }     
+    } catch (e) {
+      result.message = e;
+      print(e);
+    }
+    return result;
+  }
+
+  Future<BaseResult<bool>> updateTaskStatus(TaskStatusModel task, String token) async {
+     BaseResult<bool> result = BaseResult<bool>();
+     var taskStatus = task.toJson();
+     taskStatus['status'] = task.status.toString().replaceAll('TaskStatus.', '');
+     taskStatus.remove('id');
+     var encoded = jsonEncode(taskStatus);
+    try {
+      dio.options.headers['Authorization'] = 'bearer ' + token;
+      var response = await dio.patch("$baseUrl/tasks/${task.id}/status", data: encoded);
       if(response.statusCode.toString() == '200'){
         result.success = true;
         result.data = true; 
