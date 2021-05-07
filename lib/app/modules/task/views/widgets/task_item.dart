@@ -24,7 +24,7 @@ class TaskItem extends GetWidget<TaskController> {
       secondaryBackground: swipeLeftBackground(),
       background: isDone ? swipeRightDoneBackground() : swipeRightBackground(), 
       onDismissed: (direction){
-        if(direction == DismissDirection.endToStart)
+        if(isDone || direction == DismissDirection.endToStart)
           controller.deleteTask(task.id);
         else if(direction == DismissDirection.startToEnd)
           controller.completeTask(task.id);

@@ -89,7 +89,7 @@ class TaskController extends GetxController {
 
     var result = await repository.updateTaskStatus(task, this._token);
     if (result.success) {
-      // TODO: RELOAD TASKS AFTER COMPLETE ONE
+// TODO: RELOAD TASKS AFTER COMPLETE ONE
       await getAll();
       Get.snackbar(
         "Well done!",
