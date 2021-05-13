@@ -23,7 +23,7 @@ class AuthApiClient {
         result.success = true;
       }
     } on DioError catch (e) {
-        result.message = e.error.osError.message;
+        result.message = e.response.data['message'];
     }
     return result;
   }

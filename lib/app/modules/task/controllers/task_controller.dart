@@ -11,7 +11,7 @@ import 'package:todo_app/app/global/colors.dart';
 
 class TaskController extends GetxController {
   @override
-  void onInit() {
+  Future<void> onInit() async {
     _storage = GetStorage();
     this._token = _storage.read('accessToken');
     fillStatusList();
@@ -21,6 +21,14 @@ class TaskController extends GetxController {
   GetStorage _storage;
 
   String _token;
+
+  
+  final _filteredTasks = <Task>[].obs;
+  get filteredTasks => this._filteredTasks;
+  set filteredTasks(value) => this._filteredTasks.value = value;
+  
+
+  bool isFiltering = false;
 
   final List<TaskStatus> statusList = <TaskStatus>[];
 
@@ -89,8 +97,6 @@ class TaskController extends GetxController {
 
     var result = await repository.updateTaskStatus(task, this._token);
     if (result.success) {
-// TODO: RELOAD TASKS AFTER COMPLETE ONE
-      await getAll();
       Get.snackbar(
         "Well done!",
         "Task completed",
@@ -115,8 +121,11 @@ class TaskController extends GetxController {
     dto.dateTime = formatDateAndTime();
     var result = await repository.createTask(dto, this._token);
 
+    if(selectedFilterStatus == TaskStatus.DONE)
+      completeTask(result.id);
+
     if (result.title != null && result.title.isNotEmpty) {
-      getAll();
+        getAll();
       Get.offAndToNamed('/tasks');
     }
 
@@ -202,5 +211,22 @@ class TaskController extends GetxController {
           break;
       }
     }
+  }
+
+  filterTasks(String text) {
+    if(text.length >= 3){
+      this.filteredTasks = this.taskList.where((task) => task.title.toLowerCase().contains(text).toLowerCase() || task.description.toLowerCase().contains(text).toLowerCase());
+      isFiltering = true;
+    } else if (this.filteredTasks.length != this.taskList.length) {
+      removeTaskFilters();
+    }
+  }
+
+  removeTaskFilters() {
+    this.filteredTasks = this.taskList;
+  }
+
+  bool checkIfTaskIsDone(int taskIndex) {
+    return this.taskList[taskIndex].status == 'DONE';
   }
 }

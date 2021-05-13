@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/app/data/model/enums/task-status.enum.dart';
 import 'package:todo_app/app/global/colors.dart';
@@ -22,26 +23,33 @@ class AddTaskPage extends GetView<TaskController> {
 
     return Scaffold(
         backgroundColor: kPrimaryColor,
-        body: SafeArea(
-          child: SingleChildScrollView(
+        body: SingleChildScrollView(
                       child: Container(
-              padding: EdgeInsets.only(top: height * 0.05),
+                        height: height,
+                        padding: EdgeInsets.only(top: height * 0.06),
               width: width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    'Create a task',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 36,
-                        fontWeight: FontWeight.w600),
-                    textAlign: TextAlign.center,
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: width * 0.05),
+                        child: Text('Create a new task', style: TextStyle(color: Colors.white, fontSize: 27, fontWeight: FontWeight.bold),),
+                      ),
+                      Expanded(
+                                              child: Container(
+                          alignment: Alignment.centerRight,
+                                    padding: EdgeInsets.zero,
+                                    height: size.height * 0.1,
+                                    child: SvgPicture.asset('assets/new_idea.svg')),
+                      ),
+                    ],
                   ),
                   Container(
                     height: size.height * 0.8,
-                    margin: EdgeInsets.only(top: size.height * 0.05),
+                    margin: EdgeInsets.only(top: size.height * 0.00),
                     padding: EdgeInsets.fromLTRB(
                         width * 0.04, height * 0.05, width * 0.04, height * 0.03),
                     width: size.width,
@@ -58,6 +66,7 @@ class AddTaskPage extends GetView<TaskController> {
                           children: [
                             Obx(() => ElevatedButton(
                                 style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(width * 0.43, 0),
                                     // minimumSize: Size(size.width * 0.23, 0),
                                     primary: controller.openStatusColor,
                                     padding: EdgeInsets.all(20),
@@ -68,22 +77,33 @@ class AddTaskPage extends GetView<TaskController> {
                                   controller
                                       .changeSelectedFilter(TaskStatus.OPEN);
                                 },
-                                child: Icon(Icons.hourglass_empty))),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(right: width * 0.02),
+                                      child: Text('In progress', style: TextStyle(fontSize: 18),),
+                                    ),
+                                    Icon(Icons.hourglass_empty),
+                                  ],
+                                ))),
+                            // Obx(() => ElevatedButton(
+                            //     style: ElevatedButton.styleFrom(
+                            //         // minimumSize: Size(size.width * 0.23, 0),
+                            //         primary: controller.inProgressStatusColor,
+                            //         padding: EdgeInsets.all(20),
+                            //         shape: RoundedRectangleBorder(
+                            //             borderRadius: BorderRadius.all(
+                            //                 Radius.circular(20)))),
+                            //     onPressed: () {
+                            //       controller.changeSelectedFilter(
+                            //           TaskStatus.IN_PROGRESS);
+                            //     },
+                            //     child: Icon(Icons.pending_actions))),
                             Obx(() => ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    // minimumSize: Size(size.width * 0.23, 0),
-                                    primary: controller.inProgressStatusColor,
-                                    padding: EdgeInsets.all(20),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20)))),
-                                onPressed: () {
-                                  controller.changeSelectedFilter(
-                                      TaskStatus.IN_PROGRESS);
-                                },
-                                child: Icon(Icons.pending_actions))),
-                            Obx(() => ElevatedButton(
-                                style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(width * 0.43, 0),
+
                                     // minimumSize: Size(size.width * 0.2, 0),
                                     primary: controller.doneStatusColor,
                                     padding: EdgeInsets.all(20),
@@ -94,7 +114,16 @@ class AddTaskPage extends GetView<TaskController> {
                                   controller
                                       .changeSelectedFilter(TaskStatus.DONE);
                                 },
-                                child: Icon(Icons.done))),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(right: width * 0.02),
+                                      child: Text('Done', style: TextStyle(fontSize: 18),),
+                                    ),
+                                    Icon(Icons.done),
+                                  ],
+                                ))),
                           ],
                         ),
                         Column(
@@ -209,7 +238,7 @@ class AddTaskPage extends GetView<TaskController> {
               ),
             ),
           ),
-        ));
+        );
   }
 
   List<DropdownMenuItem> returnDropdownItems() {
