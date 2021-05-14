@@ -22,6 +22,7 @@ class SignUpPage extends GetView<AuthController> {
     final width = size.width;
     final height = size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
         backgroundColor: kPrimaryColor,
         body: ListView(
           children: [

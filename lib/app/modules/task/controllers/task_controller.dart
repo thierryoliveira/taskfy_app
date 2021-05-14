@@ -69,6 +69,7 @@ class TaskController extends GetxController {
     var tasks = await repository.getAll(this._token);
     if (tasks != null) {
       taskList.value = tasks;
+      filteredTasks.value = tasks;
     }
   }
 
@@ -215,7 +216,7 @@ class TaskController extends GetxController {
 
   filterTasks(String text) {
     if(text.length >= 3){
-      this.filteredTasks = this.taskList.where((task) => task.title.toLowerCase().contains(text).toLowerCase() || task.description.toLowerCase().contains(text).toLowerCase());
+      this.filteredTasks = this.taskList.where((task) => task.title.toLowerCase().contains(text.toLowerCase()) || task.description.toLowerCase().contains(text.toLowerCase())).toList();
       isFiltering = true;
     } else if (this.filteredTasks.length != this.taskList.length) {
       removeTaskFilters();

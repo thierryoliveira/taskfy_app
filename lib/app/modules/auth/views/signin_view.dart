@@ -22,6 +22,7 @@ class SignInPage extends GetView<AuthController> {
         bottomRight: Radius.circular(30));
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
         backgroundColor: kPrimaryColor,
         body: ListView(
           children: [
