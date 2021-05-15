@@ -22,35 +22,29 @@ class TaskController extends GetxController {
 
   String _token;
 
-  
-  final _filteredTasks = <Task>[].obs;
-  get filteredTasks => this._filteredTasks;
-  set filteredTasks(value) => this._filteredTasks.value = value;
-  
-
-  bool isFiltering = false;
+  final _taskList = <Task>[].obs;
+  get taskList => this._taskList;
+  set taskList(value) => this._taskList.value = value;
 
   final List<TaskStatus> statusList = <TaskStatus>[];
 
   final TaskRepository repository = TaskRepository();
 
-  final _taskList = <Task>[].obs;
-  get taskList => this._taskList;
-  set taskList(value) => this._taskList.value = value;
+
 
   final _selectedDate = DateTime.now().obs;
   get selectedDate => this._selectedDate.value;
   set selectedDate(value) => this._selectedDate.value = value;
 
-  final _selectedFilterStatus = TaskStatus.ALL.obs;
+  final _selectedFilterStatus = TaskStatus.IN_PROGRESS.obs;
   get selectedFilterStatus => this._selectedFilterStatus.value;
   set selectedFilterStatus(value) => this._selectedFilterStatus.value = value;
 
-  final _openStatusColor = kPrimaryColor.obs;
-  get openStatusColor => this._openStatusColor.value;
-  set openStatusColor(value) => this._openStatusColor.value = value;
+  // final _openStatusColor = kPrimaryColor.obs;
+  // get openStatusColor => this._openStatusColor.value;
+  // set openStatusColor(value) => this._openStatusColor.value = value;
 
-  final _inProgressStatusColor = kPrimaryColor.obs;
+  final _inProgressStatusColor = kDarkBlueColor.obs;
   get inProgressStatusColor => this._inProgressStatusColor.value;
   set inProgressStatusColor(value) => this._inProgressStatusColor.value = value;
 
@@ -68,8 +62,7 @@ class TaskController extends GetxController {
   getAll() async {
     var tasks = await repository.getAll(this._token);
     if (tasks != null) {
-      taskList.value = tasks;
-      filteredTasks.value = tasks;
+      taskList = tasks;
     }
   }
 
@@ -120,7 +113,10 @@ class TaskController extends GetxController {
     dto.title = title;
     dto.description = description;
     dto.dateTime = formatDateAndTime();
+    dto.createdDate = formatCurrentDateAndTime();
     var result = await repository.createTask(dto, this._token);
+    this.selectedDate = DateTime.now();
+    this.selectedFilterStatus = TaskStatus.IN_PROGRESS;
 
     if(selectedFilterStatus == TaskStatus.DONE)
       completeTask(result.id);
@@ -157,32 +153,25 @@ class TaskController extends GetxController {
     return selectedDateFormatted;
   }
 
+  String formatCurrentDateAndTime() {
+    DateFormat formatter = DateFormat('yyyy/MM/dd - hh:mm');
+    return formatter.format(DateTime.now());
+  }
+
   fillStatusList() {
     statusList.add(TaskStatus.OPEN);
     statusList.add(TaskStatus.IN_PROGRESS);
     statusList.add(TaskStatus.DONE);
   }
 
-  bool checkAlreadySelectedFilter(TaskStatus status) {
-    bool response = false;
-    if (status == selectedFilterStatus) {
-      selectedFilterStatus = TaskStatus.ALL;
-      openStatusColor = kPrimaryColor;
-      inProgressStatusColor = kPrimaryColor;
-      doneStatusColor = kPrimaryColor;
-      response = true;
-    }
-    return response;
-  }
-
   changeSelectedFilter(TaskStatus status) {
-    var isAlreadySelectedFilter = checkAlreadySelectedFilter(status);
+    var isAlreadySelectedFilter = status == selectedFilterStatus;
 
     if (!isAlreadySelectedFilter) {
       switch (status) {
         case TaskStatus.OPEN:
           selectedFilterStatus = TaskStatus.OPEN;
-          openStatusColor = kDarkBlueColor;
+          // openStatusColor = kDarkBlueColor;
 
           inProgressStatusColor = kPrimaryColor;
           doneStatusColor = kPrimaryColor;
@@ -192,7 +181,7 @@ class TaskController extends GetxController {
           selectedFilterStatus = TaskStatus.IN_PROGRESS;
           inProgressStatusColor = kDarkBlueColor;
 
-          openStatusColor = kPrimaryColor;
+          // openStatusColor = kPrimaryColor;
           doneStatusColor = kPrimaryColor;
           break;
 
@@ -200,34 +189,27 @@ class TaskController extends GetxController {
           selectedFilterStatus = TaskStatus.DONE;
           doneStatusColor = kDarkBlueColor;
 
-          openStatusColor = kPrimaryColor;
+          // openStatusColor = kPrimaryColor;
           inProgressStatusColor = kPrimaryColor;
           break;
 
         default:
           selectedFilterStatus = TaskStatus.ALL;
-          openStatusColor = kPrimaryColor;
+          // openStatusColor = kPrimaryColor;
           inProgressStatusColor = kPrimaryColor;
           doneStatusColor = kPrimaryColor;
           break;
       }
+    } else {
+      if (status == TaskStatus.DONE){
+        selectedFilterStatus = TaskStatus.IN_PROGRESS;
+        inProgressStatusColor = kDarkBlueColor;
+        doneStatusColor = kPrimaryColor;
+      } else {
+        selectedFilterStatus = TaskStatus.DONE;
+        inProgressStatusColor = kPrimaryColor;
+        doneStatusColor = kDarkBlueColor;
+      }
     }
-  }
-
-  filterTasks(String text) {
-    if(text.length >= 3){
-      this.filteredTasks = this.taskList.where((task) => task.title.toLowerCase().contains(text.toLowerCase()) || task.description.toLowerCase().contains(text.toLowerCase())).toList();
-      isFiltering = true;
-    } else if (this.filteredTasks.length != this.taskList.length) {
-      removeTaskFilters();
-    }
-  }
-
-  removeTaskFilters() {
-    this.filteredTasks = this.taskList;
-  }
-
-  bool checkIfTaskIsDone(int taskIndex) {
-    return this.taskList[taskIndex].status == 'DONE';
   }
 }

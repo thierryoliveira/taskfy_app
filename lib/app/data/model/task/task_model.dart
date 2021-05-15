@@ -14,7 +14,8 @@ class Task {
         this.title,
         this.description,
         this.status,
-        this.dateTime
+        this.dateTime,
+        this.createdDate
     });
 
     int id;
@@ -22,6 +23,8 @@ class Task {
     String description;
     String status;
     String dateTime;
+    String createdDate;
+
 
     factory Task.fromJson(Map<String, dynamic> json) => Task(
         id: json["id"],
@@ -29,6 +32,7 @@ class Task {
         description: json["description"],
         dateTime: json["dateTime"],
         status: json["status"],
+        createdDate: json["createdDate"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -37,5 +41,6 @@ class Task {
         "description": description,
         "status": status,
         "dateTime": dateTime,
+        "createdDate": createdDate,
     };
 }

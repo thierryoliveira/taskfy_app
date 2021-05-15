@@ -22,13 +22,13 @@ class TasksPage extends GetWidget<TaskController> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
         floatingActionButton: Obx(() => FloatingActionButton(
-              backgroundColor: controller.filteredTasks.length > 0
+              backgroundColor: controller.taskList.length > 0
                   ? kPrimaryColor
                   : kLighterColor,
               child: Icon(
                 Icons.add,
                 size: 40,
-                color: controller.filteredTasks.length > 0
+                color: controller.taskList.length > 0
                     ? kLighterColor
                     : kPrimaryColor,
               ),
@@ -58,8 +58,7 @@ class TasksPage extends GetWidget<TaskController> {
                       Container(
                         width: size.width * 0.58,
                         child: TextField(
-                          onChanged: controller.filterTasks,
-                          decoration: InputDecoration(                          
+                          decoration: InputDecoration(
                             hintText: 'search',
                             hintStyle: TextStyle(color: Color(0xffa0a0a0)),
                             suffixIcon: Icon(Icons.search),
@@ -78,12 +77,6 @@ class TasksPage extends GetWidget<TaskController> {
                           ),
                         ),
                       ),
-                      // Obx(() => Text(
-                      //       controller.taskList.length > 0
-                      //           ? "${controller.taskList.length} tasks remaining"
-                      //           : "No pending tasks",
-                      //       style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-                      //     )),
                       Center(
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -110,7 +103,7 @@ class TasksPage extends GetWidget<TaskController> {
                 GetX<TaskController>(
                   initState: (state){ Get.find<TaskController>().getAll(); },
                   builder: (_){
-                      return _.filteredTasks.length < 1
+                      return _.taskList.length < 1
                     ? Container(
                         margin: EdgeInsets.only(top: height * 0.08),
                         alignment: Alignment.center,
@@ -145,12 +138,12 @@ class TasksPage extends GetWidget<TaskController> {
                               padding: EdgeInsets.fromLTRB(width * 0.05,
                                   height * 0.01, width * 0.05, height * 0.05),
                               itemBuilder: (context, index) {
+                            print(index);
                                 return TaskItem(
-                                  task: _.filteredTasks[index],
                                   taskIndex: index,
                                 );
                               },
-                              itemCount: _.filteredTasks.length,
+                              itemCount: _.taskList.length,
                             )));
                   },
                 ),

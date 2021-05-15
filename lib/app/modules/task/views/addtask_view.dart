@@ -69,14 +69,14 @@ class AddTaskPage extends GetView<TaskController> {
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: Size(width * 0.43, 0),
                                     // minimumSize: Size(size.width * 0.23, 0),
-                                    primary: controller.openStatusColor,
+                                    primary: controller.inProgressStatusColor,
                                     padding: EdgeInsets.all(20),
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(20)))),
                                 onPressed: () {
                                   controller
-                                      .changeSelectedFilter(TaskStatus.OPEN);
+                                      .changeSelectedFilter(TaskStatus.IN_PROGRESS);
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
