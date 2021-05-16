@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:todo_app/app/data/model/task/task_model.dart';
 import 'package:todo_app/app/global/colors.dart';
 import 'package:todo_app/app/modules/task/controllers/task_controller.dart';
@@ -10,32 +12,72 @@ class TaskItem extends GetWidget<TaskController> {
   const TaskItem({this.task, this.index});
   @override
   Widget build(BuildContext context) {
-
-    print('task ' + task.title + ' status ' + task.status);
-
-    print('filtered length: ' + controller.filteredTasks.length.toString());
-
     final size = Get.size;
+    double taskPercentage = controller.getTaskPercentage(task.createdDate, task.dateTime);
 
     return Obx(() => Dismissible(
-              key: UniqueKey(),
-              secondaryBackground: swipeLeftBackground(),
-              background: controller.filteredTasks[index].status == 'DONE' ? swipeRightDoneBackground() : swipeRightBackground(),
-              confirmDismiss: (direction) async {
-                if (controller.filteredTasks[index].status == 'DONE' || direction == DismissDirection.endToStart) {
-                  controller.deleteTask(controller.filteredTasks[index].id);
-                  controller.getAll();
-                  return true;
-                } else {
-                  await controller.completeTask(task.id);
+          key: UniqueKey(),
+          secondaryBackground: swipeLeftBackground(),
+          background: controller.filteredTasks[index].status == 'DONE'
+              ? swipeRightDoneBackground()
+              : swipeRightBackground(),
+          confirmDismiss: (direction) async {
+            if (controller.filteredTasks[index].status == 'DONE' ||
+                direction == DismissDirection.endToStart) {
+              controller.deleteTask(controller.filteredTasks[index].id);
+              return true;
+            } else {
+              await controller.completeTask(task.id);
               await controller.getAll();
               return false;
             }
           },
           child: GestureDetector(
-            onTap: (){
+            onTap: () {
               Get.defaultDialog(
-
+                title: task.title.toUpperCase(),
+                content: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    border: Border(top: BorderSide(width: 2, color: kLighterColor))
+                  ),
+                  padding: EdgeInsets.only(top: size.height * 0.02),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(bottom: size.height * 0.03),
+                        child: Text(task.description),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: size.height * 0.03),
+                  decoration: BoxDecoration(
+                    border: Border(top: BorderSide(width: 2, color: kLighterColor))
+                  )),
+                      Text('Total time progress'),
+                      Padding(
+                        padding: EdgeInsets.only(top: size.height * 0.01, left: size.width * 0.15),
+                        child: LinearPercentIndicator(
+                              width: 140.0,
+                              lineHeight: 14.0,
+                              percent: taskPercentage,
+                              backgroundColor: Colors.grey,
+                              progressColor: Colors.blue,
+                            ),
+                      ),
+                            Text((taskPercentage * 100).toStringAsFixed(1) + '%', style: TextStyle(fontWeight: FontWeight.bold),),
+                      Container(
+                        margin: EdgeInsets.only(top: size.height * 0.03, bottom: size.height * 0.03),
+                  decoration: BoxDecoration(
+                    border: Border(top: BorderSide(width: 2, color: kLighterColor))
+                  )),
+                            Text('Created ' + controller.formatDateToShow(task.createdDate)),
+                            Text('To finish  ' + controller.formatDateToShow(task.dateTime)),
+                      
+                    ],
+                  ),
+                ),
               );
             },
             child: Container(
@@ -52,36 +94,40 @@ class TaskItem extends GetWidget<TaskController> {
                       padding: EdgeInsets.only(right: size.width * 0.02),
                       child: controller.filteredTasks[index].status == 'DONE'
                           ? Icon(
-                        Icons.check_circle,
-                        color: kSuccessColor,
-                      )
+                              Icons.check_circle,
+                              color: kSuccessColor,
+                            )
                           : Icon(
-                        Icons.pending_actions,
-                        color: kComplementaryColor,
-                      ),
+                              Icons.pending_actions,
+                              color: kComplementaryColor,
+                            ),
                     ),
                     Text(
                       controller.filteredTasks[index].title,
                       style: controller.filteredTasks[index].status == 'DONE'
                           ? TextStyle(
-                          color: Color(0xff656565),
-                          fontSize: 22,
-                          decoration: TextDecoration.lineThrough,
-                          fontWeight: FontWeight.bold)
+                              color: Color(0xff656565),
+                              fontSize: 22,
+                              decoration: TextDecoration.lineThrough,
+                              fontWeight: FontWeight.bold)
                           : TextStyle(
-                          color: Color(0xff656565),
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold),
+                              color: Color(0xff656565),
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
-
-                subtitle: Text(controller.filteredTasks[index].dateTime, style: controller.filteredTasks[index].status == 'DONE' ? TextStyle(fontSize: 18, decoration: TextDecoration.lineThrough) : TextStyle(fontSize: 18),),
+                subtitle: Text(
+                  controller.filteredTasks[index].dateTime,
+                  style: controller.filteredTasks[index].status == 'DONE'
+                      ? TextStyle(
+                          fontSize: 18, decoration: TextDecoration.lineThrough)
+                      : TextStyle(fontSize: 18),
+                ),
               ),
             ),
           ),
         ));
- 
   }
 
   Widget swipeRightBackground() {
