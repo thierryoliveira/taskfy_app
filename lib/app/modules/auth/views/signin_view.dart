@@ -22,13 +22,13 @@ class SignInPage extends GetView<AuthController> {
         bottomRight: Radius.circular(30));
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: false,
         backgroundColor: kPrimaryColor,
         body: ListView(
           children: [
             Container(
                 padding: EdgeInsets.only(top: size.height * 0.1),
-                height: size.height * 0.35,
+                height: size.height * 0.3,
                 child: SvgPicture.asset('assets/signin.svg')),
             // Row(
             //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -54,7 +54,7 @@ class SignInPage extends GetView<AuthController> {
             //   ],
             // ),
             Container(
-              height: size.height * 0.55,
+              height: size.height * 0.6,
               decoration: BoxDecoration(
                   color: kLighterColor,
                   borderRadius:
@@ -101,25 +101,29 @@ class SignInPage extends GetView<AuthController> {
                         left: width * 0.03,
                         right: width * 0.03,
                         top: height * 0.02),
-                    child: TextField(
-                      controller: passwordController,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        hintText: 'Password',
-                        hintStyle: TextStyle(color: Color(0xffa0a0a0)),
-                        prefixIcon: Icon(Icons.lock),
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: kLightGreyColor, width: 1),
-                            borderRadius: radiusStyle),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: kPrimaryColor, width: 1),
-                            borderRadius: radiusStyle),
-                      ),
-                    ),
+                    child: Obx(() => TextField(
+                          controller: passwordController,
+                          obscureText: controller.obscureTextPasswordLogin,
+                          decoration: InputDecoration(
+                            hintText: 'Password',
+                            hintStyle: TextStyle(color: Color(0xffa0a0a0)),
+                            prefixIcon: Icon(Icons.lock),
+                            suffixIcon: IconButton(
+                                onPressed: () =>
+                                    controller.changeObscureTextPasswordLogin(),
+                                icon: Icon(Icons.remove_red_eye)),
+                            filled: true,
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: kLightGreyColor, width: 1),
+                                borderRadius: radiusStyle),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: kPrimaryColor, width: 1),
+                                borderRadius: radiusStyle),
+                          ),
+                        )),
                   ),
                   GetX<AuthController>(
                     builder: (_) {
@@ -134,7 +138,7 @@ class SignInPage extends GetView<AuthController> {
                           child: ElevatedButton(
                             onPressed: () {
                               _.signIn(usernameController.text,
-                                  passwordController.text);                              
+                                  passwordController.text);
                             },
                             style: ElevatedButton.styleFrom(
                               primary: _.color,
@@ -165,7 +169,7 @@ class SignInPage extends GetView<AuthController> {
                   ),
                   Container(
                     margin: EdgeInsets.fromLTRB(
-                        width * 0.04, height * 0.03, width * 0.04, 0),
+                        width * 0.04, height * 0.05, width * 0.04, 0),
                     width: width,
                     decoration: BoxDecoration(
                         border: Border(
@@ -176,11 +180,12 @@ class SignInPage extends GetView<AuthController> {
                   Container(
                       width: width,
                       alignment: Alignment.center,
-                      margin: EdgeInsets.only(top: height * 0.03),
+                      margin: EdgeInsets.only(top: height * 0.05),
                       child: RichText(
                         text: TextSpan(
                             text: 'Do not have an account yet? ',
-                            style: TextStyle(fontSize: 18, color: kDarkBlueColor),
+                            style:
+                                TextStyle(fontSize: 18, color: kDarkBlueColor),
                             children: [
                               TextSpan(
                                   text: 'Create now!',

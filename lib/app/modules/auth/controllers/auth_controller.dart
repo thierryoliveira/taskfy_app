@@ -17,16 +17,21 @@ class AuthController extends GetxController {
   get loading => this._loading.value;
   set loading(value) => this._loading.value = value;
 
+  final _obscureTextPasswordLogin = true.obs;
+  get obscureTextPasswordLogin => this._obscureTextPasswordLogin.value;
+  set obscureTextPasswordLogin(value) => this._obscureTextPasswordLogin.value = value;
+  changeObscureTextPasswordLogin() => obscureTextPasswordLogin = !obscureTextPasswordLogin;
+
+
   final _obscureTextPassword = true.obs;
   get obscureTextPassword => this._obscureTextPassword.value;
   set obscureTextPassword(value) => this._obscureTextPassword.value = value;
-
   changeObscurePasswordValue() => obscureTextPassword = !obscureTextPassword;
+
 
   final _obscureTextPasswordConfirmation = true.obs;
   get obscureTextPasswordConfirmation => this._obscureTextPasswordConfirmation.value;
   set obscureTextPasswordConfirmation(value) => this._obscureTextPasswordConfirmation.value = value;
-
   changeObscurePasswordConfirmationValue() => obscureTextPasswordConfirmation = !obscureTextPasswordConfirmation;
 
 
