@@ -26,6 +26,10 @@ class TaskController extends GetxController {
   get taskList => this._taskList;
   set taskList(value) => this._taskList.value = value;
 
+  final _filteredTasks = <Task>[].obs;
+  get filteredTasks => this._filteredTasks;
+  set filteredTasks(value) => this._filteredTasks.value = value;
+
   final List<TaskStatus> statusList = <TaskStatus>[];
 
   final TaskRepository repository = TaskRepository();
@@ -60,14 +64,16 @@ class TaskController extends GetxController {
   }
 
   getAll() async {
+    // this.filteredTasks = <Task>[];
     var tasks = await repository.getAll(this._token);
     if (tasks != null) {
-      taskList = tasks;
+      this.taskList = tasks;
+      this.filteredTasks = tasks;
     }
   }
 
   deleteTask(int taskId) async {
-    var result = await repository.deleteTask(taskId, this._token);
+    var result =  await repository.deleteTask(taskId, this._token);
     if (result.success)
       Get.snackbar(
         "Success",
@@ -211,5 +217,15 @@ class TaskController extends GetxController {
         doneStatusColor = kDarkBlueColor;
       }
     }
+  }
+
+  filterTasks(String text) {
+    if (text.length >= 3){
+      this.filteredTasks = this.taskList.toList().where((task){
+        return task.title.contains(text) ? true : false;
+      }).toList();
+    }
+    else
+      this.filteredTasks = this.taskList;
   }
 }

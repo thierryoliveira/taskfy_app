@@ -6,11 +6,8 @@ import 'package:todo_app/app/modules/task/views/widgets/task_item.dart';
 import 'package:todo_app/app/global/colors.dart';
 
 class TasksPage extends GetWidget<TaskController> {
-
   @override
   Widget build(BuildContext context) {
-
-
     final size = Get.size;
     final height = size.height;
     final width = size.width;
@@ -20,15 +17,15 @@ class TasksPage extends GetWidget<TaskController> {
     );
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: false,
         floatingActionButton: Obx(() => FloatingActionButton(
-              backgroundColor: controller.taskList.length > 0
+              backgroundColor: controller.filteredTasks.length > 0
                   ? kPrimaryColor
                   : kLighterColor,
               child: Icon(
                 Icons.add,
                 size: 40,
-                color: controller.taskList.length > 0
+                color: controller.filteredTasks.length > 0
                     ? kLighterColor
                     : kPrimaryColor,
               ),
@@ -40,7 +37,7 @@ class TasksPage extends GetWidget<TaskController> {
             )),
         backgroundColor: kPrimaryColor,
         body: SingleChildScrollView(
-                  child: Container(
+          child: Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -58,6 +55,9 @@ class TasksPage extends GetWidget<TaskController> {
                       Container(
                         width: size.width * 0.58,
                         child: TextField(
+                          onChanged: (text) {
+                            controller.filterTasks(text);
+                          },
                           decoration: InputDecoration(
                             hintText: 'search',
                             hintStyle: TextStyle(color: Color(0xffa0a0a0)),
@@ -65,8 +65,8 @@ class TasksPage extends GetWidget<TaskController> {
                             filled: true,
                             fillColor: Colors.white,
                             enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: kLightGreyColor, width: 1),
+                                borderSide: BorderSide(
+                                    color: kLightGreyColor, width: 1),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
                             focusedBorder: OutlineInputBorder(
@@ -101,53 +101,59 @@ class TasksPage extends GetWidget<TaskController> {
                   ),
                 ),
                 GetX<TaskController>(
-                  initState: (state){ Get.find<TaskController>().getAll(); },
-                  builder: (_){
-                      return _.taskList.length < 1
-                    ? Container(
-                        margin: EdgeInsets.only(top: height * 0.08),
-                        alignment: Alignment.center,
-                        width: width * 0.7,
-                        child: Column(
-                          children: [
-                            Text(
-                              "No worries, there aren't tasks to do",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 32,
-                                color: Colors.white,
-                              ),
-                              textAlign: TextAlign.center,
+                  initState: (state) {
+                    Get.find<TaskController>().getAll();
+                  },
+                  builder: (_) {
+                    return controller.filteredTasks.length < 1
+                        ? Container(
+                            margin: EdgeInsets.only(top: height * 0.08),
+                            alignment: Alignment.center,
+                            width: width * 0.7,
+                            child: Column(
+                              children: [
+                                Text(
+                                  "No worries, there aren't tasks to do",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 32,
+                                    color: Colors.white,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Container(
+                                    padding:
+                                        EdgeInsets.only(top: size.height * 0.1),
+                                    height: size.height * 0.35,
+                                    child:
+                                        SvgPicture.asset('assets/relax.svg')),
+                              ],
+                            ))
+                        : Container(
+                            height: height * 0.75,
+                            padding: EdgeInsets.only(top: height * 0.04),
+                            decoration: BoxDecoration(
+                              color: kLighterColor,
+                              borderRadius: radiusStyle,
                             ),
-                            Container(
-                                padding: EdgeInsets.only(top: size.height * 0.1),
-                                height: size.height * 0.35,
-                                child: SvgPicture.asset('assets/relax.svg')),
-                          ],
-                        ))
-                    : Container(
-                        height: height * 0.75,
-                        padding: EdgeInsets.only(top: height * 0.04),
-                        decoration: BoxDecoration(
-                          color: kLighterColor,
-                          borderRadius: radiusStyle,
-                        ),
-                        child: Obx(() => ListView.separated(
+                            child: ListView.separated(
+                              itemCount: controller.filteredTasks.length,
                               separatorBuilder:
-                                  (BuildContext context, int index) => Divider(),
+                                  (BuildContext context, int index) =>
+                                      Divider(),
                               padding: EdgeInsets.fromLTRB(width * 0.05,
                                   height * 0.01, width * 0.05, height * 0.05),
                               itemBuilder: (context, index) {
-                            print(index);
+                                print('TASK TITLE: ' +
+                                    controller.filteredTasks[index].title);
                                 return TaskItem(
-                                  taskIndex: index,
-                                );
+                                      task: controller.filteredTasks[index],
+                                      index: index,
+                                    );
                               },
-                              itemCount: _.taskList.length,
-                            )));
+                            ));
                   },
                 ),
-                
               ],
             ),
           ),
