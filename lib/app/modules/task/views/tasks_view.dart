@@ -105,8 +105,30 @@ class TasksPage extends GetWidget<TaskController> {
                     Get.find<TaskController>().getAll();
                   },
                   builder: (_) {
-                    return controller.filteredTasks.length < 1
+                    return controller.filteredTasks.length >= 1
                         ? Container(
+                            height: height * 0.75,
+                            padding: EdgeInsets.only(top: height * 0.04),
+                            decoration: BoxDecoration(
+                              color: kLighterColor,
+                              borderRadius: radiusStyle,
+                            ),
+                            child: ListView.separated(
+                              itemCount: controller.filteredTasks.length,
+                              separatorBuilder:
+                                  (BuildContext context, int index) =>
+                                      Divider(),
+                              padding: EdgeInsets.fromLTRB(width * 0.05,
+                                  height * 0.01, width * 0.05, height * 0.05),
+                              itemBuilder: (context, index) {
+                                
+                                return TaskItem(
+                                      task: controller.filteredTasks[index],
+                                      index: index,
+                                    );
+                              },
+                            ))
+                        : Container(
                             margin: EdgeInsets.only(top: height * 0.08),
                             alignment: Alignment.center,
                             width: width * 0.7,
@@ -128,29 +150,6 @@ class TasksPage extends GetWidget<TaskController> {
                                     child:
                                         SvgPicture.asset('assets/relax.svg')),
                               ],
-                            ))
-                        : Container(
-                            height: height * 0.75,
-                            padding: EdgeInsets.only(top: height * 0.04),
-                            decoration: BoxDecoration(
-                              color: kLighterColor,
-                              borderRadius: radiusStyle,
-                            ),
-                            child: ListView.separated(
-                              itemCount: controller.filteredTasks.length,
-                              separatorBuilder:
-                                  (BuildContext context, int index) =>
-                                      Divider(),
-                              padding: EdgeInsets.fromLTRB(width * 0.05,
-                                  height * 0.01, width * 0.05, height * 0.05),
-                              itemBuilder: (context, index) {
-                                print('TASK TITLE: ' +
-                                    controller.filteredTasks[index].title);
-                                return TaskItem(
-                                      task: controller.filteredTasks[index],
-                                      index: index,
-                                    );
-                              },
                             ));
                   },
                 ),

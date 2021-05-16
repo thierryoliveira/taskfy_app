@@ -34,8 +34,6 @@ class TaskController extends GetxController {
 
   final TaskRepository repository = TaskRepository();
 
-
-
   final _selectedDate = DateTime.now().obs;
   get selectedDate => this._selectedDate.value;
   set selectedDate(value) => this._selectedDate.value = value;
@@ -73,8 +71,11 @@ class TaskController extends GetxController {
   }
 
   deleteTask(int taskId) async {
-    var result =  await repository.deleteTask(taskId, this._token);
-    if (result.success)
+    print(filteredTasks.length);
+    filteredTasks.removeWhere((task) => task.id == taskId);
+    var result = await repository.deleteTask(taskId, this._token);
+    if (result.success){
+      await getAll();
       Get.snackbar(
         "Success",
         "Task deleted",
@@ -82,6 +83,8 @@ class TaskController extends GetxController {
         colorText: Colors.white,
         backgroundColor: kSuccessColor,
       );
+    }
+    
     else
       Get.snackbar(
         "Error",
@@ -97,6 +100,7 @@ class TaskController extends GetxController {
 
     var result = await repository.updateTaskStatus(task, this._token);
     if (result.success) {
+      await getAll();
       Get.snackbar(
         "Well done!",
         "Task completed",
@@ -118,21 +122,19 @@ class TaskController extends GetxController {
     CreateTaskDTO dto = CreateTaskDTO();
     dto.title = title;
     dto.description = description;
-    dto.dateTime = formatDateAndTime();
-    dto.createdDate = formatCurrentDateAndTime();
+    dto.dateTime = this.selectedDate.toString();
+    dto.createdDate = DateTime.now().toString();
     var result = await repository.createTask(dto, this._token);
     this.selectedDate = DateTime.now();
     this.selectedFilterStatus = TaskStatus.IN_PROGRESS;
 
-    if(selectedFilterStatus == TaskStatus.DONE)
-      completeTask(result.id);
+    if (selectedFilterStatus == TaskStatus.DONE) completeTask(result.id);
 
     if (result.title != null && result.title.isNotEmpty) {
-        getAll();
+      getAll();
       Get.offAndToNamed('/tasks');
     }
 
-    print(result);
   }
 
   String returnSelectedDate() {
@@ -153,15 +155,10 @@ class TaskController extends GetxController {
         : selectedDateFormatted;
   }
 
-  String formatDateAndTime() {
-    DateFormat formatter = DateFormat('yyyy/MM/dd - hh:mm');
-    String selectedDateFormatted = formatter.format(selectedDate);
-    return selectedDateFormatted;
-  }
-
-  String formatCurrentDateAndTime() {
-    DateFormat formatter = DateFormat('yyyy/MM/dd - hh:mm');
-    return formatter.format(DateTime.now());
+  String formatDateToShow(String date) {
+    DateTime parsedDate = DateTime.parse(date);
+    DateFormat formatter = DateFormat('yyyy/MM/dd hh:mm');
+    return formatter.format(parsedDate);
   }
 
   fillStatusList() {
@@ -207,7 +204,7 @@ class TaskController extends GetxController {
           break;
       }
     } else {
-      if (status == TaskStatus.DONE){
+      if (status == TaskStatus.DONE) {
         selectedFilterStatus = TaskStatus.IN_PROGRESS;
         inProgressStatusColor = kDarkBlueColor;
         doneStatusColor = kPrimaryColor;
@@ -220,12 +217,30 @@ class TaskController extends GetxController {
   }
 
   filterTasks(String text) {
-    if (text.length >= 3){
-      this.filteredTasks = this.taskList.toList().where((task){
+    if (text.length >= 3) {
+      this.filteredTasks = this.taskList.toList().where((task) {
         return task.title.contains(text) ? true : false;
       }).toList();
-    }
-    else
+    } else
       this.filteredTasks = this.taskList;
   }
+
+  getTaskPercentage(String taskDate, String taskCreatedDate) {
+    var parsedTaskDate = DateTime.parse(taskDate);
+    var parsedTaskCreatedDate = DateTime.parse(taskCreatedDate);
+
+    var totalHours = parsedTaskDate.difference(parsedTaskCreatedDate).inHours;
+    var elapsedHours = DateTime.now().difference(parsedTaskCreatedDate).inHours;
+
+    double percentageDone = elapsedHours / totalHours;
+
+    return percentageDone;
+  }
+
+  roundPercentage(double percentage) {
+    var roundedPercentage = percentage.roundToDouble();
+    print('rounding ' + percentage.toString() + ' to ' + roundedPercentage.toString());
+    return roundedPercentage;
+  }
+
 }

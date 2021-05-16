@@ -194,7 +194,6 @@ class AddTaskPage extends GetView<TaskController> {
                                                 .add(Duration(days: 60)),
                                             locale: LocaleType.en,
                                             onChanged: (date) {
-                                          print(date);
                                           controller.changeSelectedDate(date);
                                         });
                                       },

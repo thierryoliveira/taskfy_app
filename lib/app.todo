@@ -1,0 +1,16 @@
+( TH ) Total de horas que representa 100% -> Data da tarefa - Data de criação (obtém o diferencial em horas)
+
+( TD ) Tempo decorrido: Data atual - data de criação
+
+( PD ) Porcentagem decorrida = 
+
+    TH -> 100
+    TD -> X
+
+
+    X * TH = 100 * TD
+
+    X = 100 * TD / TH
+
+
+
