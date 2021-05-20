@@ -7,7 +7,7 @@ import 'package:todo_app/app/data/model/task/task_model.dart';
 import 'package:todo_app/app/data/model/task/task_status_model.dart';
 import 'package:todo_app/app/global/models/base_result_model.dart';
 
-const baseUrl = 'http://192.168.1.17:3000';
+const baseUrl = 'https://thierry-taskmanagement-api.herokuapp.com';
 
 class TaskProvider implements TaskInterface {
 
