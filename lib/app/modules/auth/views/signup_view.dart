@@ -10,8 +10,12 @@ class SignUpPage extends GetView<AuthController> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordConfirmationController =
       TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
-  final BorderRadius radiusStyle = BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20));
+  final BorderRadius radiusStyle = BorderRadius.only(
+      topLeft: Radius.circular(20),
+      bottomLeft: Radius.circular(20),
+      bottomRight: Radius.circular(20));
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +23,13 @@ class SignUpPage extends GetView<AuthController> {
     final width = size.width;
     final height = size.height;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-        backgroundColor: kPrimaryColor,
-        body: ListView(
+      resizeToAvoidBottomInset: true,
+      backgroundColor: kPrimaryColor,
+      body: SafeArea(
+        child: ListView(
           children: [
             Container(
-              height: height * 0.4,
-              color: kPrimaryColor,
+              margin: EdgeInsets.only(top: height * 0.02),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -51,131 +55,136 @@ class SignUpPage extends GetView<AuthController> {
               height: height * 0.6,
               decoration: BoxDecoration(
                   color: kLighterColor,
-                  borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(35))),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                        left: width * 0.05,
-                        right: width * 0.05,
-                        top: height * 0.05),
-                    child: TextField(
-                      controller: usernameController,
-                      decoration: InputDecoration(
-                        hintText: 'username',
-                        hintStyle: TextStyle(color: Color(0xffa0a0a0)),
-                        prefixIcon: Icon(Icons.person),
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: kLightGreyColor, width: 1),
-                            borderRadius: radiusStyle),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: kPrimaryColor, width: 1),
-                            borderRadius: radiusStyle),
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(35))),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                       margin: EdgeInsets.only(
+                          left: width * 0.05,
+                          right: width * 0.05,),
+                      child: TextFormField(
+                        controller: usernameController,
+                        decoration: InputDecoration(
+                          hintText: 'username',
+                          hintStyle: TextStyle(color: Color(0xffa0a0a0)),
+                          prefixIcon: Icon(Icons.person),
+                          filled: true,
+                          fillColor: Colors.white,
+                          enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: kLightGreyColor, width: 1),
+                              borderRadius: radiusStyle),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: kPrimaryColor, width: 1),
+                              borderRadius: radiusStyle),
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                        left: width * 0.05,
-                        right: width * 0.05,
-                        top: height * 0.04),
-                    child: Obx(() => TextField(
-                          obscureText: controller.obscureTextPassword,
-                          controller: passwordController,
-                          decoration: InputDecoration(
-                            hintText: 'password',
-                            hintStyle: TextStyle(color: Color(0xffa0a0a0)),
-                            prefixIcon: Icon(Icons.person),
-                            suffixIcon: IconButton(
-                                onPressed: () =>
-                                    controller.changeObscurePasswordValue(),
-                                icon: Icon(Icons.remove_red_eye)),
-                            filled: true,
-                            fillColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: kLightGreyColor, width: 1), borderRadius: radiusStyle,
-                            ),
-                            focusedBorder: OutlineInputBorder(
+                    Container(
+                      margin: EdgeInsets.only(
+                          left: width * 0.05,
+                          right: width * 0.05,),
+                      child: Obx(() => TextField(
+                            obscureText: controller.obscureTextPassword,
+                            controller: passwordController,
+                            decoration: InputDecoration(
+                              hintText: 'password',
+                              hintStyle: TextStyle(color: Color(0xffa0a0a0)),
+                              prefixIcon: Icon(Icons.lock),
+                              suffixIcon: IconButton(
+                                  onPressed: () =>
+                                      controller.changeObscurePasswordValue(),
+                                  icon: Icon(Icons.remove_red_eye)),
+                              filled: true,
+                              fillColor: Colors.white,
+                              enabledBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: kPrimaryColor, width: 1), borderRadius: radiusStyle),
-                          ),
-                        )),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                        left: width * 0.05,
-                        right: width * 0.05,
-                        top: height * 0.04),
-                    child: Obx(() => TextField(
-                          obscureText:
-                              controller.obscureTextPasswordConfirmation,
-                          controller: passwordConfirmationController,
-                          decoration: InputDecoration(
-                            hintText: 'password confirmation',
-                            hintStyle: TextStyle(color: Color(0xffa0a0a0)),
-                            prefixIcon: Icon(Icons.person),
-                            suffixIcon: IconButton(
-                                onPressed: () => controller
-                                    .changeObscurePasswordConfirmationValue(),
-                                icon: Icon(Icons.remove_red_eye)),
-                            filled: true,
-                            fillColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: kLightGreyColor, width: 1), borderRadius: radiusStyle,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: kPrimaryColor, width: 1), borderRadius: radiusStyle),
-                          ),
-                        )),
-                  ),
-                  Obx(() => Container(
-                        margin: EdgeInsets.only(
-                            left: width * 0.05,
-                            right: width * 0.05,
-                            top: height * 0.04),
-                        height: 54,
-                        width: width * 0.94,
-                        child: ElevatedButton(
-                          onPressed: () => controller.signUp(
-                              usernameController.text, passwordController.text),
-                          style: ElevatedButton.styleFrom(
-                            primary: controller.color,
-                            shape: RoundedRectangleBorder(
+                                    BorderSide(color: kLightGreyColor, width: 1),
                                 borderRadius: radiusStyle,
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: kPrimaryColor, width: 1),
+                                  borderRadius: radiusStyle),
                             ),
+                          )),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          left: width * 0.05,
+                          right: width * 0.05,),
+                      child: Obx(() => TextField(
+                            obscureText:
+                                controller.obscureTextPasswordConfirmation,
+                            controller: passwordConfirmationController,
+                            decoration: InputDecoration(
+                              hintText: 'password confirmation',
+                              hintStyle: TextStyle(color: Color(0xffa0a0a0)),
+                              prefixIcon: Icon(Icons.lock),
+                              suffixIcon: IconButton(
+                                  onPressed: () => controller
+                                      .changeObscurePasswordConfirmationValue(),
+                                  icon: Icon(Icons.remove_red_eye)),
+                              filled: true,
+                              fillColor: Colors.white,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: kLightGreyColor, width: 1),
+                                borderRadius: radiusStyle,
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: kPrimaryColor, width: 1),
+                                  borderRadius: radiusStyle),
+                            ),
+                          )),
+                    ),
+                    Obx(() => Container(
+                          margin: EdgeInsets.only(
+                              left: width * 0.05,
+                              right: width * 0.05,),
+                          height: 54,
+                          width: width * 0.94,
+                          child: ElevatedButton(
+                            onPressed: () => controller.signUp(
+                                usernameController.text, passwordController.text),
+                            style: ElevatedButton.styleFrom(
+                              primary: controller.color,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: radiusStyle,
+                              ),
+                            ),
+                            child: controller.loading
+                                ? Center(
+                                    child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white),
+                                  ))
+                                : Text(
+                                    "sign up",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 26,
+                                        fontWeight: FontWeight.bold),
+                                    // style: GoogleFonts.lobsterTwo(
+                                    //     fontSize: 28,
+                                    //     color: Colors.white,
+                                    //     fontWeight: FontWeight.bold)
+                                  ),
                           ),
-                          child: controller.loading
-                              ? Center(
-                                  child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white),
-                                ))
-                              : Text(
-                                  "sign up",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 26,
-                                      fontWeight: FontWeight.bold),
-                                  // style: GoogleFonts.lobsterTwo(
-                                  //     fontSize: 28,
-                                  //     color: Colors.white,
-                                  //     fontWeight: FontWeight.bold)
-                                ),
-                        ),
-                      )),
-                ],
+                        )),
+                  ],
+                ),
               ),
             ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

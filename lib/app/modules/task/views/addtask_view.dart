@@ -22,7 +22,7 @@ class AddTaskPage extends GetView<TaskController> {
     );
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
         backgroundColor: kPrimaryColor,
         body: SingleChildScrollView(
                       child: Container(
