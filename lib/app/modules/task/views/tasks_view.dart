@@ -110,7 +110,7 @@ class TasksPage extends GetWidget<TaskController> {
                             height: height * 0.75,
                             padding: EdgeInsets.only(top: height * 0.04),
                             decoration: BoxDecoration(
-                              color: kLighterColor,
+                              color: kLighterColor,   
                               borderRadius: radiusStyle,
                             ),
                             child: ListView.separated(

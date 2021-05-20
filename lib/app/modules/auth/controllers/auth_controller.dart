@@ -45,16 +45,13 @@ class AuthController extends GetxController {
       this.loading = true;
       changeButtonLoading();
       repository.signIn(username, password).then((result) {
+        this.loading = false;
+          changeButtonLoading();
         if (result.success) {
           writeAccessTokenOnStorage(result.data.accessToken);
-          this.loading = false;
           this.signedIn = true;
-          changeButtonLoading();
           Get.offAndToNamed('/tasks');
         } else {
-          this.loading = false;
-          changeButtonLoading();
-  
           Get.snackbar(
             "Error",
             result.message,
