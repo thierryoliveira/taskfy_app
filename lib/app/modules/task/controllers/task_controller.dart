@@ -58,7 +58,7 @@ class TaskController extends GetxController {
 
   signOut() {
     _storage.remove('accessToken');
-    Get.offAndToNamed('/signin');
+    // Get.offAndToNamed('/signin');
   }
 
   getAll() async {
@@ -71,7 +71,6 @@ class TaskController extends GetxController {
   }
 
   deleteTask(int taskId) async {
-    print(filteredTasks.length);
     filteredTasks.removeWhere((task) => task.id == taskId);
     var result = await repository.deleteTask(taskId, this._token);
     if (result.success){
@@ -126,7 +125,6 @@ class TaskController extends GetxController {
     dto.createdDate = DateTime.now().toString();
     var result = await repository.createTask(dto, this._token);
     this.selectedDate = DateTime.now();
-    this.selectedFilterStatus = TaskStatus.IN_PROGRESS;
 
     if (selectedFilterStatus == TaskStatus.DONE) completeTask(result.id);
 
@@ -239,7 +237,6 @@ class TaskController extends GetxController {
 
   roundPercentage(double percentage) {
     var roundedPercentage = percentage.roundToDouble();
-    print('rounding ' + percentage.toString() + ' to ' + roundedPercentage.toString());
     return roundedPercentage;
   }
 
