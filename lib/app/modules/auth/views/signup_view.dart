@@ -11,10 +11,7 @@ class SignUpPage extends GetView<AuthController> {
   TextEditingController passwordConfirmationController =
       TextEditingController();
 
-  final BorderRadius radiusStyle = BorderRadius.only(
-    topLeft: Radius.circular(25),
-    topRight: Radius.circular(25),
-  );
+  final BorderRadius radiusStyle = BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20));
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +48,11 @@ class SignUpPage extends GetView<AuthController> {
               ),
             ),
             Container(
-              height: height * 0.5,
+              height: height * 0.6,
               decoration: BoxDecoration(
                   color: kLighterColor,
-                  borderRadius: BorderRadius.all(Radius.circular(25))),
+                  borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(35))),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -86,7 +84,7 @@ class SignUpPage extends GetView<AuthController> {
                     margin: EdgeInsets.only(
                         left: width * 0.05,
                         right: width * 0.05,
-                        top: height * 0.02),
+                        top: height * 0.04),
                     child: Obx(() => TextField(
                           obscureText: controller.obscureTextPassword,
                           controller: passwordController,
@@ -102,11 +100,11 @@ class SignUpPage extends GetView<AuthController> {
                             fillColor: Colors.white,
                             enabledBorder: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(color: kLightGreyColor, width: 1),
+                                  BorderSide(color: kLightGreyColor, width: 1), borderRadius: radiusStyle,
                             ),
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: kPrimaryColor, width: 1)),
+                                    BorderSide(color: kPrimaryColor, width: 1), borderRadius: radiusStyle),
                           ),
                         )),
                   ),
@@ -114,7 +112,7 @@ class SignUpPage extends GetView<AuthController> {
                     margin: EdgeInsets.only(
                         left: width * 0.05,
                         right: width * 0.05,
-                        top: height * 0.02),
+                        top: height * 0.04),
                     child: Obx(() => TextField(
                           obscureText:
                               controller.obscureTextPasswordConfirmation,
@@ -131,11 +129,11 @@ class SignUpPage extends GetView<AuthController> {
                             fillColor: Colors.white,
                             enabledBorder: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(color: kLightGreyColor, width: 1),
+                                  BorderSide(color: kLightGreyColor, width: 1), borderRadius: radiusStyle,
                             ),
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: kPrimaryColor, width: 1)),
+                                    BorderSide(color: kPrimaryColor, width: 1), borderRadius: radiusStyle),
                           ),
                         )),
                   ),
@@ -143,7 +141,7 @@ class SignUpPage extends GetView<AuthController> {
                         margin: EdgeInsets.only(
                             left: width * 0.05,
                             right: width * 0.05,
-                            top: height * 0.02),
+                            top: height * 0.04),
                         height: 54,
                         width: width * 0.94,
                         child: ElevatedButton(
@@ -152,10 +150,8 @@ class SignUpPage extends GetView<AuthController> {
                           style: ElevatedButton.styleFrom(
                             primary: controller.color,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(25),
-                              bottomRight: Radius.circular(25),
-                            )),
+                                borderRadius: radiusStyle,
+                            ),
                           ),
                           child: controller.loading
                               ? Center(
