@@ -104,6 +104,8 @@ class TaskItem extends GetWidget<TaskController> {
                     ),
                     Text(
                       controller.filteredTasks[index].title,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
                       style: controller.filteredTasks[index].status == 'DONE'
                           ? TextStyle(
                               color: Color(0xff656565),
@@ -118,7 +120,8 @@ class TaskItem extends GetWidget<TaskController> {
                   ],
                 ),
                 subtitle: Text(
-                  controller.filteredTasks[index].dateTime,
+                  controller.formatDateToShow(task.dateTime),
+                  // textAlign: TextAlign.center,
                   style: controller.filteredTasks[index].status == 'DONE'
                       ? TextStyle(
                           fontSize: 18, decoration: TextDecoration.lineThrough)
