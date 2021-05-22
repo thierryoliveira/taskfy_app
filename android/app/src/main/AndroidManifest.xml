@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.todo_app">
+    package="dev.thierryoliveira.task_management">
+   <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="todo_app"
+        android:label="TaskManager Flutter"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity

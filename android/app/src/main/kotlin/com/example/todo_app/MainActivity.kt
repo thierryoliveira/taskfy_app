@@ -1,4 +1,4 @@
-package com.example.todo_app
+package dev.thierryoliveira.task_management
 
 import io.flutter.embedding.android.FlutterActivity
 
