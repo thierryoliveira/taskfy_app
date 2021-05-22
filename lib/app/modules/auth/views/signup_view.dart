@@ -96,7 +96,7 @@ class SignUpPage extends GetView<AuthController> {
                           right: width * 0.05,),
                       child: Obx(() => TextFormField(
                             validator: (value){
-                              bool isValid = RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&\-_])[A-Za-z\d@$!%*?&\-_]{8,}$").hasMatch(value);
+                              bool isValid = controller.validatePasswordStrength(value);
                               return isValid ? null : 'Your password need to be strong';
                             },
                             obscureText: controller.obscureTextPassword,
