@@ -70,9 +70,19 @@ class AuthController extends GetxController {
         (password != null && password.isNotEmpty)) {
           this.loading = true;
           changeButtonLoading();
-          repository.signUp(username, password).then((bool success){
-            if (success) {
+          repository.signUp(username, password).then((result){
+            this.loading = false;
+          changeButtonLoading();
+            if (result.success) {
               signIn(username, password);
+            } else {
+              Get.snackbar(
+            "Error",
+            result.message,
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Colors.white,
+            backgroundColor: kRadicalRedColor,
+          );
             }
           });
         }

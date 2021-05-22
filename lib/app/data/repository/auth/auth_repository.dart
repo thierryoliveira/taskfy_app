@@ -11,7 +11,7 @@ final AuthApiClient apiClient = AuthApiClient();
       return apiClient.signIn(username, password);
   }
   
-  Future<bool> signUp(String username, String password) async {
+  Future<BaseResult<bool>> signUp(String username, String password) async {
     return apiClient.signUp(username, password);
   }
 }

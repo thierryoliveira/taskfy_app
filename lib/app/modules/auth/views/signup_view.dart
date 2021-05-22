@@ -18,7 +18,7 @@ class SignUpPage extends GetView<AuthController> {
       bottomRight: Radius.circular(20));
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
     final size = Get.size;
     final width = size.width;
     final height = size.height;
@@ -67,6 +67,11 @@ class SignUpPage extends GetView<AuthController> {
                           left: width * 0.05,
                           right: width * 0.05,),
                       child: TextFormField(
+                        validator: (value) {
+                          return value.isBlank || value.length < 3 
+                            ? "It must have 3 or more characters"
+                            : null;
+                        },
                         controller: usernameController,
                         decoration: InputDecoration(
                           hintText: 'username',
@@ -91,7 +96,7 @@ class SignUpPage extends GetView<AuthController> {
                           right: width * 0.05,),
                       child: Obx(() => TextFormField(
                             validator: (value){
-                              bool isValid = RegExp(r"^((?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%&*]{8,20})$").hasMatch(value);
+                              bool isValid = RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&\-_])[A-Za-z\d@$!%*?&\-_]{8,}$").hasMatch(value);
                               return isValid ? null : 'Your password need to be strong';
                             },
                             obscureText: controller.obscureTextPassword,

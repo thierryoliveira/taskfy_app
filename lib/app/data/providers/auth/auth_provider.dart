@@ -28,20 +28,21 @@ class AuthApiClient {
     return result;
   }
 
-  Future<bool> signUp(String username, String password) async {
-    bool _success = false;
+  Future<BaseResult<bool>> signUp(String username, String password) async {
+    BaseResult<bool> result = BaseResult<bool>();
     dio.options.contentType = Headers.jsonContentType;
     try {
       var response = await dio.post(baseUrl + '/auth/signup/',
           data: jsonEncode({'username': username, 'password': password}),
           options: Options(contentType: Headers.jsonContentType));
       if (response.statusCode.toString() == '201') {
-        _success = true;
+        result.data = true;
+         result.success = true;
       }
-    } catch (e) {
-      print(e);
+    } on DioError catch (e) {
+      result.message = e.response.data['message'];
     }
-    return _success;
+    return result;
   }
 
 }

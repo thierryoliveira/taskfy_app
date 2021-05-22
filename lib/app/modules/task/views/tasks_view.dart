@@ -16,6 +16,7 @@ class TasksPage extends GetWidget<TaskController> {
       topRight: Radius.circular(40),
     );
 
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         floatingActionButton: Obx(() => FloatingActionButton(
