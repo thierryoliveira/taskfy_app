@@ -10,6 +10,7 @@ class AddTaskPage extends GetView<TaskController> {
 
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();  
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -88,24 +89,9 @@ class AddTaskPage extends GetView<TaskController> {
                                     Icon(Icons.hourglass_empty),
                                   ],
                                 ))),
-                            // Obx(() => ElevatedButton(
-                            //     style: ElevatedButton.styleFrom(
-                            //         // minimumSize: Size(size.width * 0.23, 0),
-                            //         primary: controller.inProgressStatusColor,
-                            //         padding: EdgeInsets.all(20),
-                            //         shape: RoundedRectangleBorder(
-                            //             borderRadius: BorderRadius.all(
-                            //                 Radius.circular(20)))),
-                            //     onPressed: () {
-                            //       controller.changeSelectedFilter(
-                            //           TaskStatus.IN_PROGRESS);
-                            //     },
-                            //     child: Icon(Icons.pending_actions))),
                             Obx(() => ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: Size(width * 0.43, 0),
-
-                                    // minimumSize: Size(size.width * 0.2, 0),
                                     primary: controller.doneStatusColor,
                                     padding: EdgeInsets.all(20),
                                     shape: RoundedRectangleBorder(
@@ -127,39 +113,17 @@ class AddTaskPage extends GetView<TaskController> {
                                 ))),
                           ],
                         ),
-                        Column(
-                          children: [
-                            TextField(
-                              controller: titleController,
-                              decoration: InputDecoration(
-                                labelText: 'Title',
-                                hintStyle: TextStyle(color: Color(0xffa0a0a0)),
-                                prefixIcon: Icon(Icons.segment),
-                                filled: true,
-                                fillColor: Colors.white,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: kLightGreyColor, width: 1),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: kPrimaryColor, width: 1),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: height * 0.02),
-                              child: TextField(
-                                controller: descriptionController,
-                                maxLines: 2,
+                        Form(
+                          key: _formKey,
+                                                  child: Column(
+                            children: [
+                              TextFormField(
+                                validator: (value) => (value.isBlank || value.length < 5) ? "Must have 5 or more characters" : null,
+                                controller: titleController,
                                 decoration: InputDecoration(
-                                  labelText: 'Description',
+                                  labelText: 'Title',
                                   hintStyle: TextStyle(color: Color(0xffa0a0a0)),
-                                  prefixIcon: Icon(Icons.subject_rounded),
+                                  prefixIcon: Icon(Icons.segment),
                                   filled: true,
                                   fillColor: Colors.white,
                                   enabledBorder: OutlineInputBorder(
@@ -169,43 +133,70 @@ class AddTaskPage extends GetView<TaskController> {
                                         BorderRadius.all(Radius.circular(20)),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
+                                    borderSide: BorderSide(
                                         color: kPrimaryColor, width: 1),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
+                                        BorderRadius.all(Radius.circular(20)),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: height * 0.02),
-                              child: Obx(() => ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          minimumSize: Size(width * 0.92, 0),
-                                          primary: kPrimaryColor,
-                                          padding: EdgeInsets.all(20),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(20)))),
-                                      onPressed: () {
-                                        DatePicker.showDateTimePicker(context,
-                                            minTime: DateTime.now()
-                                                .subtract(Duration(days: 60)),
-                                            maxTime: DateTime.now()
-                                                .add(Duration(days: 60)),
-                                            locale: LocaleType.en,
-                                            onChanged: (date) {
-                                          controller.changeSelectedDate(date);
-                                        });
-                                      },
-                                      child: Text(
-                                        controller.returnSelectedDateAndTime(),
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w500),
-                                      ))),
-                            ),
-                          ],
+                              Padding(
+                                padding: EdgeInsets.only(top: height * 0.02),
+                                child: TextFormField(
+                                  validator: (value) => (value.isBlank || value.length < 5) ? "Must have 5 or more characters" : null,
+                                  controller: descriptionController,
+                                  maxLines: 2,
+                                  decoration: InputDecoration(
+                                    labelText: 'Description',
+                                    hintStyle: TextStyle(color: Color(0xffa0a0a0)),
+                                    prefixIcon: Icon(Icons.subject_rounded),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: kLightGreyColor, width: 1),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(20)),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: kPrimaryColor, width: 1),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(20))),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: height * 0.02),
+                                child: Obx(() => ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            minimumSize: Size(width * 0.92, 0),
+                                            primary: kPrimaryColor,
+                                            padding: EdgeInsets.all(20),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(20)))),
+                                        onPressed: () {
+                                          DatePicker.showDateTimePicker(context,
+                                              minTime: DateTime.now()
+                                                  .subtract(Duration(days: 60)),
+                                              maxTime: DateTime.now()
+                                                  .add(Duration(days: 60)),
+                                              locale: LocaleType.en,
+                                              onChanged: (date) {
+                                            controller.changeSelectedDate(date);
+                                          });
+                                        },
+                                        child: Text(
+                                          controller.returnSelectedDateAndTime(),
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500),
+                                        ))),
+                              ),
+                            ],
+                          ),
                         ),
                         Container(
                           width: width,
@@ -224,7 +215,8 @@ class AddTaskPage extends GetView<TaskController> {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)))),
                             onPressed: () {
-                              controller.createTask(titleController.text, descriptionController.text);
+                              if(_formKey.currentState.validate())
+                                controller.createTask(titleController.text, descriptionController.text);
                             },
                             child: Text('Done',
                                 style: TextStyle(
