@@ -89,7 +89,11 @@ class SignUpPage extends GetView<AuthController> {
                       margin: EdgeInsets.only(
                           left: width * 0.05,
                           right: width * 0.05,),
-                      child: Obx(() => TextField(
+                      child: Obx(() => TextFormField(
+                            validator: (value){
+                              bool isValid = RegExp(r"^((?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%&*]{8,20})$").hasMatch(value);
+                              return isValid ? null : 'Your password need to be strong';
+                            },
                             obscureText: controller.obscureTextPassword,
                             controller: passwordController,
                             decoration: InputDecoration(
@@ -118,7 +122,10 @@ class SignUpPage extends GetView<AuthController> {
                       margin: EdgeInsets.only(
                           left: width * 0.05,
                           right: width * 0.05,),
-                      child: Obx(() => TextField(
+                      child: Obx(() => TextFormField(
+                        validator: (value) {
+                          return value == passwordController.text ? null : "Password confirmation doesn't match";
+                        },
                             obscureText:
                                 controller.obscureTextPasswordConfirmation,
                             controller: passwordConfirmationController,
@@ -151,8 +158,11 @@ class SignUpPage extends GetView<AuthController> {
                           height: 54,
                           width: width * 0.94,
                           child: ElevatedButton(
-                            onPressed: () => controller.signUp(
-                                usernameController.text, passwordController.text),
+                            onPressed: () {
+                              if (_formKey.currentState.validate())
+                                  controller.signUp(
+                                usernameController.text, passwordController.text);
+                            },
                             style: ElevatedButton.styleFrom(
                               primary: controller.color,
                               shape: RoundedRectangleBorder(
