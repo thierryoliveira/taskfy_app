@@ -15,7 +15,11 @@ class TaskItem extends GetWidget<TaskController> {
     final size = Get.size;
     double taskPercentage = controller.getTaskPercentage(task.createdDate, task.dateTime);
 
-    return Obx(() => Dismissible(
+
+
+    return Obx(() => ClipRRect(
+  borderRadius: BorderRadius.circular(15.0),
+  child: Dismissible(
           key: UniqueKey(),
           secondaryBackground: swipeLeftBackground(),
           background: controller.filteredTasks[index].status == 'DONE'
@@ -82,7 +86,7 @@ class TaskItem extends GetWidget<TaskController> {
             },
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15.0),
+                // borderRadius: BorderRadius.circular(15.0),
                 color: Colors.white,
               ),
               padding: const EdgeInsets.only(top: 7, bottom: 7),
@@ -130,7 +134,9 @@ class TaskItem extends GetWidget<TaskController> {
               ),
             ),
           ),
-        ));
+        )
+)
+    );
   }
 
   Widget swipeRightBackground() {
