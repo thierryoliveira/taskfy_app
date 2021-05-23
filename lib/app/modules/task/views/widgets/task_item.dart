@@ -106,20 +106,23 @@ class TaskItem extends GetWidget<TaskController> {
                               color: kComplementaryColor,
                             ),
                     ),
-                    Text(
-                      controller.filteredTasks[index].title,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: controller.filteredTasks[index].status == 'DONE'
-                          ? TextStyle(
-                              color: Color(0xff656565),
-                              fontSize: 22,
-                              decoration: TextDecoration.lineThrough,
-                              fontWeight: FontWeight.bold)
-                          : TextStyle(
-                              color: Color(0xff656565),
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold),
+                    Container(
+                      width: size.width * 0.7,
+                                          child: Text(
+                        controller.filteredTasks[index].title,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        style: controller.filteredTasks[index].status == 'DONE'
+                            ? TextStyle(
+                                color: Color(0xff656565),
+                                fontSize: 22,
+                                decoration: TextDecoration.lineThrough,
+                                fontWeight: FontWeight.bold)
+                            : TextStyle(
+                                color: Color(0xff656565),
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ],
                 ),
