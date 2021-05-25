@@ -228,6 +228,8 @@ class TaskController extends GetxController {
     var parsedTaskCreatedDate = DateTime.parse(taskCreatedDate);
 
     var totalHours = parsedTaskDate.difference(parsedTaskCreatedDate).inHours;
+
+    if (totalHours <= 0) return 1.0;
     var elapsedHours = DateTime.now().difference(parsedTaskCreatedDate).inHours;
 
     double percentageDone = elapsedHours / totalHours;

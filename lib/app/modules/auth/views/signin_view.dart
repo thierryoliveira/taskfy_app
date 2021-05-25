@@ -160,23 +160,30 @@ class SignInPage extends GetView<AuthController> {
                                     width: 2,
                                     color: kLightGreyColor.withOpacity(0.3)))),
                       ),
-                      Container(
-                          width: width,
-                          alignment: Alignment.center,
-                          margin: EdgeInsets.only(top: height * 0.05),
-                          child: RichText(
-                            text: TextSpan(
-                                text: 'Do not have an account yet? ',
-                                style:
-                                    TextStyle(fontSize: 18, color: kDarkBlueColor),
-                                children: [
-                                  TextSpan(
-                                      text: 'Create now!',
-                                      style: TextStyle(fontWeight: FontWeight.bold),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () => Get.toNamed('/signup')),
-                                ]),
-                          ))
+                      Expanded(
+                        child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                              width: width,
+                              alignment: Alignment.center,
+                              child: RichText(
+                                text: TextSpan(
+                                    text: 'Do not have an account yet? ',
+                                    style:
+                                        TextStyle(fontSize: 18, color: kDarkBlueColor),
+                                    children: [
+                                      TextSpan(
+                                          text: 'Create now!',
+                                          style: TextStyle(fontWeight: FontWeight.bold),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () => Get.toNamed('/signup')),
+                                    ]),
+                              )),
+                        ],
+                      ),
+                      ),
+                      
                     ],
                   ),
                 ),
