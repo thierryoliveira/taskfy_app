@@ -1,4 +1,4 @@
-package dev.thierryoliveira.task_management
+package dev.thierryoliveira.taskfy
 
 import io.flutter.embedding.android.FlutterActivity
 

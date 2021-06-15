@@ -2,19 +2,19 @@ import 'dart:convert';
 // import 'package:getx_pattern/app/data/model/model.dart';
 import 'package:dio/dio.dart';
 import 'package:todo_app/app/data/model/auth/access_token_model.dart';
+import 'package:todo_app/app/global/api.dart';
 import 'package:todo_app/app/global/models/base_result_model.dart';
-
-const baseUrl = 'https://thierry-taskmanagement-api.herokuapp.com';
 
 class AuthApiClient {
   final Dio dio = Dio();
 
-  Future<BaseResult<AccessTokenModel>> signIn(String username, String password) async {
+  Future<BaseResult<AccessTokenModel>> signIn(
+      String username, String password) async {
     BaseResult<AccessTokenModel> result = BaseResult<AccessTokenModel>();
     AccessTokenModel token = AccessTokenModel();
     dio.options.contentType = Headers.jsonContentType;
     try {
-      var response = await dio.post(baseUrl + '/auth/signin/',
+      var response = await dio.post(BASE_URL + '/auth/signin/',
           data: jsonEncode({'username': username, 'password': password}),
           options: Options(contentType: Headers.jsonContentType));
       if (response.data != null) {
@@ -23,7 +23,7 @@ class AuthApiClient {
         result.success = true;
       }
     } on DioError catch (e) {
-        result.message = e.response.data['message'];
+      result.message = e.response.data['message'];
     }
     return result;
   }
@@ -32,17 +32,16 @@ class AuthApiClient {
     BaseResult<bool> result = BaseResult<bool>();
     dio.options.contentType = Headers.jsonContentType;
     try {
-      var response = await dio.post(baseUrl + '/auth/signup/',
+      var response = await dio.post(BASE_URL + '/auth/signup/',
           data: jsonEncode({'username': username, 'password': password}),
           options: Options(contentType: Headers.jsonContentType));
       if (response.statusCode.toString() == '201') {
         result.data = true;
-         result.success = true;
+        result.success = true;
       }
     } on DioError catch (e) {
       result.message = e.response.data['message'];
     }
     return result;
   }
-
 }

@@ -13,13 +13,12 @@ class TaskItem extends GetWidget<TaskController> {
   @override
   Widget build(BuildContext context) {
     final size = Get.size;
-    double taskPercentage = controller.getTaskPercentage(task.createdDate, task.dateTime);
-
-
+    double taskPercentage =
+        controller.getTaskPercentage(task.createdDate, task.dateTime);
 
     return Obx(() => ClipRRect(
-  borderRadius: BorderRadius.circular(15.0),
-  child: Dismissible(
+        borderRadius: BorderRadius.circular(15.0),
+        child: Dismissible(
           key: UniqueKey(),
           secondaryBackground: swipeLeftBackground(),
           background: controller.filteredTasks[index].status == 'DONE'
@@ -37,53 +36,53 @@ class TaskItem extends GetWidget<TaskController> {
             }
           },
           child: GestureDetector(
-            onTap: () {
-              Get.defaultDialog(
-                title: task.title.toUpperCase(),
-                content: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    border: Border(top: BorderSide(width: 2, color: kLighterColor))
-                  ),
-                  padding: EdgeInsets.only(top: size.height * 0.02),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(bottom: size.height * 0.03),
-                        child: Text(task.description),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: size.height * 0.03),
-                  decoration: BoxDecoration(
-                    border: Border(top: BorderSide(width: 2, color: kLighterColor))
-                  )),
-                      Text('Total time progress'),
-                      Padding(
-                        padding: EdgeInsets.only(top: size.height * 0.01, left: size.width * 0.15),
-                        child: LinearPercentIndicator(
-                              width: 140.0,
-                              lineHeight: 14.0,
-                              percent: taskPercentage,
-                              backgroundColor: Colors.grey,
-                              progressColor: Colors.blue,
-                            ),
-                      ),
-                            Text((taskPercentage * 100).toStringAsFixed(1) + '%', style: TextStyle(fontWeight: FontWeight.bold),),
-                      Container(
-                        margin: EdgeInsets.only(top: size.height * 0.03, bottom: size.height * 0.03),
-                  decoration: BoxDecoration(
-                    border: Border(top: BorderSide(width: 2, color: kLighterColor))
-                  )),
-                            Text('Created ' + controller.formatDateToShow(task.createdDate)),
-                            Text('To finish  ' + controller.formatDateToShow(task.dateTime)),
-                      
-                    ],
-                  ),
-                ),
-              );
-            },
+            // onTap: () {
+            //   Get.defaultDialog(
+            //     title: task.title.toUpperCase(),
+            //     content: Container(
+            //       alignment: Alignment.center,
+            //       decoration: BoxDecoration(
+            //         border: Border(top: BorderSide(width: 2, color: kLighterColor))
+            //       ),
+            //       padding: EdgeInsets.only(top: size.height * 0.02),
+            //       child: Column(
+            //         crossAxisAlignment: CrossAxisAlignment.center,
+            //         mainAxisAlignment: MainAxisAlignment.start,
+            //         children: [
+            //           Padding(
+            //             padding: EdgeInsets.only(bottom: size.height * 0.03),
+            //             child: Text(task.description),
+            //           ),
+            //           Container(
+            //             margin: EdgeInsets.only(bottom: size.height * 0.03),
+            //       decoration: BoxDecoration(
+            //         border: Border(top: BorderSide(width: 2, color: kLighterColor))
+            //       )),
+            //           Text('Total time progress'),
+            //           Padding(
+            //             padding: EdgeInsets.only(top: size.height * 0.01, left: size.width * 0.15),
+            //             child: LinearPercentIndicator(
+            //                   width: 140.0,
+            //                   lineHeight: 14.0,
+            //                   percent: taskPercentage,
+            //                   backgroundColor: Colors.grey,
+            //                   progressColor: Colors.blue,
+            //                 ),
+            //           ),
+            //                 Text((taskPercentage * 100).toStringAsFixed(1) + '%', style: TextStyle(fontWeight: FontWeight.bold),),
+            //           Container(
+            //             margin: EdgeInsets.only(top: size.height * 0.03, bottom: size.height * 0.03),
+            //       decoration: BoxDecoration(
+            //         border: Border(top: BorderSide(width: 2, color: kLighterColor))
+            //       )),
+            //                 Text('Created ' + controller.formatDateToShow(task.createdDate)),
+            //                 Text('To finish  ' + controller.formatDateToShow(task.dateTime)),
+
+            //         ],
+            //       ),
+            //     ),
+            //   );
+            // },
             child: Container(
               decoration: BoxDecoration(
                 // borderRadius: BorderRadius.circular(15.0),
@@ -108,7 +107,7 @@ class TaskItem extends GetWidget<TaskController> {
                     ),
                     Container(
                       width: size.width * 0.7,
-                                          child: Text(
+                      child: Text(
                         controller.filteredTasks[index].title,
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
@@ -137,9 +136,7 @@ class TaskItem extends GetWidget<TaskController> {
               ),
             ),
           ),
-        )
-)
-    );
+        )));
   }
 
   Widget swipeRightBackground() {

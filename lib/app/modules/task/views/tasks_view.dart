@@ -16,6 +16,7 @@ class TasksPage extends GetWidget<TaskController> {
       topRight: Radius.circular(40),
     );
 
+    controller.signOut();
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -111,7 +112,7 @@ class TasksPage extends GetWidget<TaskController> {
                             height: height * 0.75,
                             padding: EdgeInsets.only(top: height * 0.04),
                             decoration: BoxDecoration(
-                              color: kLighterColor,   
+                              color: kLighterColor,
                               borderRadius: radiusStyle,
                             ),
                             child: ListView.separated(
@@ -122,11 +123,10 @@ class TasksPage extends GetWidget<TaskController> {
                               padding: EdgeInsets.fromLTRB(width * 0.05,
                                   height * 0.01, width * 0.05, height * 0.05),
                               itemBuilder: (context, index) {
-                                
                                 return TaskItem(
-                                      task: controller.filteredTasks[index],
-                                      index: index,
-                                    );
+                                  task: controller.filteredTasks[index],
+                                  index: index,
+                                );
                               },
                             ))
                         : Container(
